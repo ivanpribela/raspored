@@ -1,9 +1,11 @@
 package org.svetovid.raspored.model;
 
+import org.svetovid.raspored.util.Proveri;
+
 /**
  * Ova klasa predstavlja jedan termin za cas. On se sastoji od dana u nedelji,
  * vremena pocetka i vremena kraja.
- *
+ * 
  * @author Ivan Pribela
  */
 public final class Termin implements Comparable<Termin> {
@@ -13,6 +15,9 @@ public final class Termin implements Comparable<Termin> {
 	private final Vreme vremeDo;
 
 	public Termin(Dan dan, Vreme vremeOd, Vreme vremeDo) throws IllegalArgumentException {
+		Proveri.argument(dan != null, "dan", dan);
+		Proveri.argument(vremeOd != null, "vremeOd", vremeOd);
+		Proveri.argument(vremeDo != null, "vremeDo", vremeDo);
 		this.dan = dan;
 		this.vremeOd = vremeOd;
 		this.vremeDo = vremeDo;

@@ -1,5 +1,7 @@
 package org.svetovid.raspored.model;
 
+import org.svetovid.raspored.util.Proveri;
+
 /**
  * Ova klasa predstavlja vreme kao sat i minut.
  *
@@ -11,6 +13,8 @@ public final class Vreme implements Comparable<Vreme> {
 	private final int minut;
 
 	public Vreme(int sat, int minut) throws IllegalArgumentException {
+		Proveri.argument(sat >= 0 || sat <= 23, "sat", sat);
+		Proveri.argument(minut >= 0 || minut <= 59, "minut", minut);
 		this.sat = sat;
 		this.minut = minut;
 	}
