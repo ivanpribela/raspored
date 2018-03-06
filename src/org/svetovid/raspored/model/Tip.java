@@ -1,8 +1,11 @@
 package org.svetovid.raspored.model;
 
+import java.util.Set;
+import java.util.stream.Collectors;
+
 /**
- * Ova klasa predstavlja jedan tip casa.
- *
+ * Ova klasa predstavlja jedan tip casa. 
+ * 
  * @author Ivan Pribela
  */
 public enum Tip {
@@ -25,5 +28,12 @@ public enum Tip {
 
 	public String getNaziv() {
 		return naziv;
+	}
+
+	// {} < {P} < {P, V} < {P, V, RV} < {P, RV} < {V} < {V, RV} < {RV}
+	public static int compare(Set<Tip> tipovi1, Set<Tip> tipovi2) {
+		String s1 = tipovi1.stream().map(Tip::ordinal).sorted().map(Object::toString).collect(Collectors.joining());
+		String s2 = tipovi2.stream().map(Tip::ordinal).sorted().map(Object::toString).collect(Collectors.joining());
+		return s1.compareTo(s2);
 	}
 }
