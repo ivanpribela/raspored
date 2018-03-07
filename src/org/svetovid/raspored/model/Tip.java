@@ -30,6 +30,21 @@ public enum Tip {
 		return naziv;
 	}
 
+	// Pretvara skup tipova casova u string oblika P+V
+	public static String pretvoriUOznake(Set<Tip> tipovi) {
+		StringBuilder s = new StringBuilder();
+		for (Tip tip : Tip.values()) {
+			if (tipovi.contains(tip)) {
+				s.append(tip.oznaka);
+				s.append("+");
+			}
+		}
+		if (s.length() > 0) {
+			s.delete(s.length() - 1, s.length());
+		}
+		return s.toString();
+	}
+
 	// {} < {P} < {P, V} < {P, V, RV} < {P, RV} < {V} < {V, RV} < {RV}
 	public static int compare(Set<Tip> tipovi1, Set<Tip> tipovi2) {
 		String s1 = tipovi1.stream().map(Tip::ordinal).sorted().map(Object::toString).collect(Collectors.joining());
