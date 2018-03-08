@@ -1,7 +1,10 @@
 package org.svetovid.raspored.model;
 
+import java.util.EnumSet;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import org.svetovid.raspored.util.Proveri;
 
 /**
  * Ova klasa predstavlja jedan tip casa. 
@@ -28,6 +31,23 @@ public enum Tip {
 
 	public String getNaziv() {
 		return naziv;
+	}
+
+	// Pretvara string oblika P+V u skup tipova casova
+	public static EnumSet<Tip> pretvoriIzOznaka(String tipovi) throws IllegalArgumentException {
+		EnumSet<Tip> skup = EnumSet.noneOf(Tip.class);
+		String[] oznake = tipovi.split("\\+");
+		for (String oznaka : oznake) {
+			boolean poznat = false;
+			for (Tip tip : Tip.values()) {
+				if (tip.getOznaka().equalsIgnoreCase(oznaka.trim())) {
+					skup.add(tip);
+					poznat = true;
+				}
+			}
+			Proveri.argument(!poznat, "oznaka", oznaka);
+		}
+		return skup;
 	}
 
 	// Pretvara skup tipova casova u string oblika P+V
