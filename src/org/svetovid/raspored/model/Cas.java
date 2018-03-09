@@ -1,0 +1,118 @@
+package org.svetovid.raspored.model;
+
+import java.time.LocalDateTime;
+import java.util.Collections;
+import java.util.EnumSet;
+import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
+
+import org.svetovid.raspored.util.Proveri;
+
+/**
+ * Ova klasa predstavlja jedan cas.
+ * 
+ * @author Ivan Pribela
+ */
+public final class Cas {
+
+	private final SortedSet<String> studenti;
+	private final Termin termin;
+	private final String predmet;
+	private final String nastavnik;
+	private final Set<Tip> tipovi;
+	private final String sala;
+	private final String id;
+	private final LocalDateTime datumIzmene;
+
+	public Cas(Set<String> studenti, Termin termin, String predmet, String nastavnik, Set<Tip> tipovi, String sala, String id, LocalDateTime datumIzmene) throws IllegalArgumentException {
+		Proveri.argument(studenti != null, "studenti", studenti);
+		Proveri.argument(termin != null, "termin", termin);
+		Proveri.argument(predmet != null, "predmet", predmet);
+		Proveri.argument(nastavnik != null, "nastavnik", nastavnik);
+		Proveri.argument(tipovi != null, "tipovi", tipovi);
+		Proveri.argument(sala != null, "sala", sala);
+		Proveri.argument(id != null, "id", id);
+		Proveri.argument(datumIzmene != null, "datumIzmene", datumIzmene);
+		this.studenti = Collections.unmodifiableSortedSet(new TreeSet<>(studenti));
+		this.termin = termin;
+		this.predmet = predmet;
+		this.nastavnik = nastavnik;
+		this.tipovi = Collections.unmodifiableSet(EnumSet.copyOf(tipovi));
+		this.sala = sala;
+		this.id = id;
+		this.datumIzmene = datumIzmene;
+	}
+
+	public Set<String> getStudenti() {
+		return studenti;
+	}
+
+	public Termin getTermin() {
+		return termin;
+	}
+
+	public Dan getDan() {
+		return termin.getDan();
+	}
+
+	public Vreme getVremeOd() {
+		return termin.getVremeOd();
+	}
+
+	public Vreme getVremeDo() {
+		return termin.getVremeDo();
+	}
+
+	public String getPredmet() {
+		return predmet;
+	}
+	
+	public String getNastavnik() {
+		return nastavnik;
+	}
+	
+	public Set<Tip> getTipovi() {
+		return tipovi;
+	}
+	
+	public String getSala() {
+		return sala;
+	}
+	
+	public String getId() {
+		return id;
+	}
+	
+	public LocalDateTime getDatumIzmene() {
+		return datumIzmene;
+	}
+
+	@Override
+	public int hashCode() {
+		return id.hashCode();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		Cas that = (Cas) obj;
+		if (!this.id.equals(that.id)) {
+			return false;
+		}
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return id;
+	}
+}
