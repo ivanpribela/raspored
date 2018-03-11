@@ -1,8 +1,10 @@
 package org.svetovid.raspored.model;
 
+import org.svetovid.raspored.util.Proveri;
+
 /**
- * Ova klasa predstavlja jedan dan u nedelji.
- *
+ * Ova klasa predstavlja jedan dan u nedelji. 
+ * 
  * @author Ivan Pribela
  */
 public enum Dan {
@@ -35,5 +37,19 @@ public enum Dan {
 
 	public boolean isRadni() {
 		return radni;
+	}
+
+	// Prihvata englesku dvoslovnu skracenicu
+	public static Dan pretvoriEngleskuDvoslovnuOznaku(String dan) throws IllegalArgumentException {
+		switch (dan) {
+			case "MO" : return PONEDELJAK;
+			case "TU" : return UTORAK;
+			case "WE" : return SREDA;
+			case "TH" : return CETVRTAK;
+			case "FR" : return PETAK;
+			case "SA" : return SUBOTA;
+			case "SU" : return NEDELJA;
+			default   : throw Proveri.argument("dan", dan);
+		}
 	}
 }
