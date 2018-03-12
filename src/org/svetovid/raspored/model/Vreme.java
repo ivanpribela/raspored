@@ -62,4 +62,15 @@ public final class Vreme implements Comparable<Vreme> {
 	public String toString() {
 		return (sat < 10 ? "0" : "") + sat + "." + (minut < 10 ? "0" : "") + minut;
 	}
+
+	// Vreme oblika SSMMXX... gde je SS sat, MM minut a XX... sekunde, milisekunde, itd. koje se zanemaruju
+	public static Vreme pretvoriISO(String vreme) throws IllegalArgumentException {
+		try {
+			int sat = Integer.parseInt(vreme.substring(0, 2));
+			int minut = Integer.parseInt(vreme.substring(2, 4));
+			return new Vreme(sat, minut);
+		} catch (IllegalArgumentException e) {
+			throw Proveri.argument("vreme", vreme, e);
+		}
+	}
 }
