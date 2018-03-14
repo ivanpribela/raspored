@@ -4,7 +4,9 @@ import java.time.DateTimeException;
 import java.time.LocalDateTime;
 import java.util.Set;
 
+import org.svetovid.raspored.model.Cas;
 import org.svetovid.raspored.model.Dan;
+import org.svetovid.raspored.model.Termin;
 import org.svetovid.raspored.model.Tip;
 import org.svetovid.raspored.model.Vreme;
 import org.svetovid.raspored.util.Proveri;
@@ -147,5 +149,40 @@ public final class GraditeljCasova {
 		} catch (NumberFormatException | DateTimeException e) {
 			throw Proveri.argument("datumIzmene", novaVrednost);
 		}
+	}
+
+	public Cas napravi() throws IllegalStateException {
+		if (studenti == null) {
+			throw new IllegalStateException("studenti");
+		}
+		if (dan == null) {
+			throw new IllegalStateException("dan");
+		}
+		if (vremeOd == null) {
+			throw new IllegalStateException("vremeOd");
+		}
+		if (vremeDo == null) {
+			throw new IllegalStateException("vremeDo");
+		}
+		if (predmet == null) {
+			throw new IllegalStateException("predmet");
+		}
+		if (nastavnik == null) {
+			throw new IllegalStateException("nastavnik");
+		}
+		if (tipovi == null) {
+			throw new IllegalStateException("tipovi");
+		}
+		if (sala == null) {
+			throw new IllegalStateException("sala");
+		}
+		if (id == null) {
+			throw new IllegalStateException("id");
+		}
+		if (datumIzmene == null) {
+			throw new IllegalStateException("datumIzmene");
+		}
+		Termin termin = new Termin(dan, vremeOd, vremeDo);
+		return new Cas(Set.of(studenti), termin, predmet, nastavnik, tipovi, sala, id, datumIzmene);
 	}
 }
