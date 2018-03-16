@@ -50,7 +50,26 @@ public final class Parser {
 
 	public List<Cas> parsiraj(String naziv, List<String> linije) {
 		List<Cas> casovi = new ArrayList<>();
+		GraditeljCasova graditelj = null;
 		for (String linija : linije) {
+			if ("BEGIN:VEVENT".equals(linija.trim())) {
+				graditelj = new GraditeljCasova();
+				graditelj.studenti(naziv);
+				continue;
+			}
+			if (graditelj == null) {
+				continue;
+			}
+			if ("END:VEVENT".equals(linija.trim())) {
+				try {
+					Cas cas = graditelj.napravi();
+					casovi.add(cas);
+				} catch (IllegalStateException e) {
+					// TODO Obraditi nepotpune casove
+				}
+				graditelj = null;
+				continue;
+			}
 			// TODO Implementirati pomocu regularnih izraza
 		}
 		return casovi;
