@@ -7,7 +7,13 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.svetovid.raspored.model.Cas;
 
@@ -19,6 +25,20 @@ import org.svetovid.raspored.model.Cas;
 public final class Parser {
 
 	public Parser() {
+	}
+
+	private static final Pattern GRUPE = Pattern.compile("\\(\\?<(.+?)>.*?\\)");
+	private final Map<Pattern, Set<String>> obrasci = new LinkedHashMap<>();
+
+	public Parser(Iterable<Pattern> patterns) {
+		for (Pattern pattern : patterns) {
+			Matcher matcher = GRUPE.matcher(pattern.pattern());
+			Set<String> groups = new LinkedHashSet<>();
+			while(matcher.find()) {
+				this.obrasci.put(pattern, groups);
+				groups.add(matcher.group(1));
+			}
+		}
 	}
 
 	public List<Cas> parsiraj(String naziv, Path path) throws IOException {
