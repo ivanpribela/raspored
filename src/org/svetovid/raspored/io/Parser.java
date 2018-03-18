@@ -7,6 +7,7 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -24,7 +25,23 @@ import org.svetovid.raspored.model.Cas;
  */
 public final class Parser {
 
+	public static final Pattern PATTERN_STUDENTI     = Pattern.compile("^ATTENDEE(;.*)*;CN=(?<studenti>.*?)(;.*)*:mailto.*$");
+	public static final Pattern PATTERN_DAN          = Pattern.compile("^RRULE(;.*)*:(.*;)*FREQ=WEEKLY(;.*)*;BYDAY=(?<dan>.*?)(;.*)*$");
+	public static final Pattern PATTERN_VREME_OD     = Pattern.compile("^DTSTART(;.*)*:(\\d{8})T(?<vremeOd>\\d{6})Z?$");
+	public static final Pattern PATTERN_VREME_DO     = Pattern.compile("^DTEND(;.*)*:(\\d{8})T(?<vremeDo>\\d{6})Z?$");
+	public static final Pattern PATTERN_PODACI       = Pattern.compile("^SUMMARY(;.*)*:\\s*(?<predmet>.+?)\\s*\\\\,\\s*(?<nastavnik>.*?)\\s*(\\\\,)?\\s*\\((?<tipovi>.+)\\)\\s*\\\\,\\s*(?<sala>.*)$");
+	public static final Pattern PATTERN_ID           = Pattern.compile("^UID(;.*)*:(?<id>.*)$");
+	public static final Pattern PATTERN_DATUM_IZMENE = Pattern.compile("^LAST-MODIFIED(;.*)*:(?<datumIzmene>\\d{8}T\\d{6}Z)$");
+
 	public Parser() {
+		this(Arrays.asList(
+			PATTERN_DAN,
+			PATTERN_VREME_OD,
+			PATTERN_VREME_DO,
+			PATTERN_PODACI,
+			PATTERN_ID,
+			PATTERN_DATUM_IZMENE
+		));
 	}
 
 	private static final Pattern GRUPE = Pattern.compile("\\(\\?<(.+?)>.*?\\)");
