@@ -3,6 +3,7 @@ package org.svetovid.raspored.io;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.lang.reflect.Method;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -13,6 +14,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.Map.Entry;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -107,7 +109,20 @@ public final class Parser {
 				graditelj = null;
 				continue;
 			}
-			// TODO Implementirati pomocu regularnih izraza
+			for (Entry<Pattern, Set<String>> entry : obrasci.entrySet()) {
+				Matcher matcher = entry.getKey().matcher(linija);
+				if (matcher.matches()) {
+					for (String osobina : entry.getValue()) {
+						String vrednost = matcher.group(osobina);
+						try {
+							Method metod = graditelj.getClass().getMethod(osobina, String.class);
+							metod.invoke(graditelj, vrednost);
+						} catch (ReflectiveOperationException e) {
+							// TODO Obraditi nepostojecu osobinu
+						}
+					}
+				}
+			}
 		}
 		return casovi;
 	}
