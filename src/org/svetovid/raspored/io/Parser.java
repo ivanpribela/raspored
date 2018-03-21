@@ -13,16 +13,18 @@ import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.Map.Entry;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.svetovid.raspored.model.Cas;
+import org.svetovid.raspored.model.Tip;
+import org.svetovid.raspored.util.Dnevnik;
 
 /**
  * Ova klasa sluzi za ucitavanje kalendara u iCalendar formatu.
- *
+ * 
  * @author Ivan Pribela
  */
 public final class Parser {
@@ -90,25 +92,32 @@ public final class Parser {
 	public List<Cas> parsiraj(String naziv, List<String> linije) {
 		List<Cas> casovi = new ArrayList<>();
 		GraditeljCasova graditelj = null;
+		int brLinije = 0;
 		for (String linija : linije) {
+			brLinije++;
 			if ("BEGIN:VEVENT".equals(linija.trim())) {
 				graditelj = new GraditeljCasova();
 				graditelj.studenti(naziv);
+				Dnevnik.trag3("Linija %3d - Početak događaja", brLinije);
 				continue;
 			}
 			if (graditelj == null) {
+				Dnevnik.trag3("Linija %3d - Van događaja: %s", brLinije, linija);
 				continue;
 			}
 			if ("END:VEVENT".equals(linija.trim())) {
+				Dnevnik.trag3("Linija %3d - Kraj događaja", brLinije);
 				try {
 					Cas cas = graditelj.napravi();
 					casovi.add(cas);
+					Dnevnik.trag("Potpun događaj:   %s", formatirajCasZaDnevnik(cas));
 				} catch (IllegalStateException e) {
-					// TODO Obraditi nepotpune casove
+					Dnevnik.trag("Nepotpun događaj: %s", formatirajCasZaDnevnik(graditelj));
 				}
 				graditelj = null;
 				continue;
 			}
+			boolean zapisano = false;
 			for (Entry<Pattern, Set<String>> entry : obrasci.entrySet()) {
 				Matcher matcher = entry.getKey().matcher(linija);
 				if (matcher.matches()) {
@@ -117,13 +126,52 @@ public final class Parser {
 						try {
 							Method metod = graditelj.getClass().getMethod(osobina, String.class);
 							metod.invoke(graditelj, vrednost);
+							if (!zapisano) {
+								Dnevnik.trag3("Linija %3d - U događaju:   %s", brLinije, linija);
+								zapisano = true;
+							}
+							Dnevnik.trag2("%s = \"%s\"", osobina, vrednost);
 						} catch (ReflectiveOperationException e) {
-							// TODO Obraditi nepostojecu osobinu
+							Dnevnik.upozorenje("Nepoznata osobina: %s = \"%s\"", e, osobina, vrednost);
 						}
 					}
 				}
 			}
+			Dnevnik.trag3("Linija %3d - U događaju:   %s", brLinije, linija);
+			if (!zapisano) {
+				Dnevnik.trag3("Linija %3d - Ignorisana:   %s", brLinije, linija);
+			}
 		}
 		return casovi;
+	}
+
+	private Object formatirajCasZaDnevnik(Cas cas) {
+		return String.format("%s %s %s %3s %5s-%5s %s, %s (%s) %s",
+				cas.getId(),
+				cas.getDatumIzmene(),
+				cas.getStudenti(),
+				cas.getDan().getOznaka(),
+				cas.getVremeOd(),
+				cas.getVremeDo(),
+				cas.getNastavnik(),
+				cas.getPredmet(),
+				Tip.pretvoriUOznake(cas.getTipovi()),
+				cas.getSala()
+		);
+	}
+
+	private Object formatirajCasZaDnevnik(GraditeljCasova fabrika) {
+		return String.format("%s %s %s %3s %5s-%5s %s, %s (%s) %s",
+				fabrika.getId() == null ? "" : fabrika.getId(),
+				fabrika.getDatumIzmene() == null ? "?" : fabrika.getDatumIzmene(),
+				fabrika.getStudenti() == null ? "?" : fabrika.getStudenti(),
+				fabrika.getDan() == null ? " - " : fabrika.getDan().getOznaka(),
+				fabrika.getVremeOd() == null ? "  ?  " : fabrika.getVremeOd(),
+				fabrika.getVremeDo() == null ? "  ?  " : fabrika.getVremeDo(),
+				fabrika.getNastavnik() == null ? "???" : fabrika.getNastavnik(),
+				fabrika.getPredmet() == null ? "???" : fabrika.getPredmet(),
+				fabrika.getTipovi() == null ? "?" : Tip.pretvoriUOznake(fabrika.getTipovi()),
+				fabrika.getSala() == null ? "-" : fabrika.getSala()
+		);
 	}
 }
