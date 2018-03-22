@@ -128,11 +128,11 @@ public final class GraditeljCasova {
 		return this;
 	}
 
-	public LocalDateTime datumIzmene() {
+	public LocalDateTime getDatumIzmene() {
 		return datumIzmene;
 	}
 
-	public GraditeljCasova setDatumIzmene(String novaVrednost) throws IllegalArgumentException {
+	public GraditeljCasova datumIzmene(String novaVrednost) throws IllegalArgumentException {
 		if (novaVrednost == null) {
 			datumIzmene = null;
 			return this;
