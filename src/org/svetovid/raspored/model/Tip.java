@@ -45,7 +45,7 @@ public enum Tip {
 					poznat = true;
 				}
 			}
-			Proveri.argument(!poznat, "oznaka", oznaka);
+			Proveri.argument(poznat, "oznaka", oznaka);
 		}
 		return skup;
 	}
