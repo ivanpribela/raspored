@@ -21,6 +21,7 @@ import java.util.regex.Pattern;
 import org.svetovid.raspored.model.Cas;
 import org.svetovid.raspored.model.Tip;
 import org.svetovid.raspored.util.Dnevnik;
+import org.svetovid.raspored.util.Proveri;
 
 /**
  * Ova klasa sluzi za ucitavanje kalendara u iCalendar formatu.
@@ -51,30 +52,35 @@ public final class Parser {
 	private static final Pattern GRUPE = Pattern.compile("\\(\\?<(.+?)>.*?\\)");
 	private final Map<Pattern, Set<String>> obrasci = new LinkedHashMap<>();
 
-	public Parser(Iterable<Pattern> patterns) {
-		for (Pattern pattern : patterns) {
-			Matcher matcher = GRUPE.matcher(pattern.pattern());
+	public Parser(Iterable<Pattern> obrasci) {
+		Proveri.argument(obrasci != null, "obrasci", obrasci);
+		for (Pattern obrazac : obrasci) {
+			Proveri.argument(obrazac != null, "obrasci", obrasci);
+			Matcher matcher = GRUPE.matcher(obrazac.pattern());
 			Set<String> groups = new LinkedHashSet<>();
 			while(matcher.find()) {
-				this.obrasci.put(pattern, groups);
+				this.obrasci.put(obrazac, groups);
 				groups.add(matcher.group(1));
 			}
 		}
 	}
 
 	public List<Cas> parsiraj(String naziv, Path path) throws IOException {
+		Proveri.argument(path != null, "path", path);
 		try (BufferedReader in = new BufferedReader(new InputStreamReader(Files.newInputStream(path)))) {
 			return parsiraj(naziv, in);
 		}
 	}
 
 	public List<Cas> parsiraj(String naziv, URL url) throws IOException {
+		Proveri.argument(url != null, "url", url);
 		try (BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()))) {
 			return parsiraj(naziv, in);
 		}
 	}
 
 	public List<Cas> parsiraj(String naziv, BufferedReader in) throws IOException {
+		Proveri.argument(in != null, "in", in);
 		List<String> linije = new ArrayList<String>();
 		String linija = in.readLine();
 		while (linija != null) {
@@ -90,10 +96,12 @@ public final class Parser {
 	}
 
 	public List<Cas> parsiraj(String naziv, List<String> linije) {
+		Proveri.argument(linije != null, "linije", linije);
 		List<Cas> casovi = new ArrayList<>();
 		GraditeljCasova graditelj = null;
 		int brLinije = 0;
 		for (String linija : linije) {
+			Proveri.argument(linija != null, "linije[" + brLinije + "]", linija);
 			brLinije++;
 			if ("BEGIN:VEVENT".equals(linija.trim())) {
 				graditelj = new GraditeljCasova();
