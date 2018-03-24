@@ -1,6 +1,10 @@
 package org.svetovid.raspored.util;
 
+import java.lang.StackWalker.Option;
+import java.lang.StackWalker.StackFrame;
+import java.util.Optional;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Pomocna klasa koja sluzi za zapisivanje poruka o graskama i drugim stvarima.
@@ -70,6 +74,27 @@ public class Dnevnik {
 	}
 
 	protected static void zapisi(Level level, String message, Throwable thrown, Object... arguments) {
-		// TODO Implementirati preko nekog standardnog sistema za logovanje
+		message = String.format(message, arguments);
+		Logger logger = findLogger();
+		if (thrown == null) {
+			logger.log(level, message);
+		} else {
+			logger.log(level, message, thrown);
+		}
+	}
+
+	protected static Logger findLogger() {
+		return Logger.getLogger(findCallerClass());
+	}
+
+	protected static String findCallerClass() {
+		StackWalker walker = StackWalker.getInstance(Option.RETAIN_CLASS_REFERENCE);
+		Optional<String> callerClassName = walker.walk(stack -> stack
+				.map(StackFrame::getDeclaringClass)
+				.filter(type -> type != Dnevnik.class)
+				.map(Class::getName)
+				.findFirst()
+		);
+		return callerClassName.orElse("");
 	}
 }
