@@ -1,9 +1,16 @@
 package org.svetovid.raspored.util;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.lang.StackWalker.Option;
 import java.lang.StackWalker.StackFrame;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
+import java.util.logging.Formatter;
 import java.util.logging.Level;
+import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 
 /**
@@ -96,5 +103,54 @@ public class Dnevnik {
 				.findFirst()
 		);
 		return callerClassName.orElse("");
+	}
+
+	protected static DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss").withZone(ZoneId.systemDefault());
+
+	protected static class DnevnikFormatter extends Formatter {
+
+		@Override
+		public String format(LogRecord logRecord) {
+			if (logRecord.getThrown() == null) {
+				return String.format("%s | %s | %s%n", formatTimestamp(logRecord.getInstant()), formatLevel(logRecord.getLevel()), logRecord.getMessage());
+			} else {
+				return String.format("%s | %s | %s%n%s", formatTimestamp(logRecord.getInstant()), formatLevel(logRecord.getLevel()), logRecord.getMessage(), formatThrown(logRecord.getThrown()));
+			}
+		}
+
+		private String formatTimestamp(Instant timestamp) {
+			return timeFormatter.format(timestamp);
+		}
+
+		private String formatLevel(Level level) {
+			if (level.intValue()  >= Level.SEVERE.intValue()) {
+				return "  GRESKA  ";
+			}
+			if (level.intValue()  >= Level.WARNING.intValue()) {
+				return "UPOZORENJE";
+			}
+			if (level.intValue()  >= Level.INFO.intValue()) {
+				return "   INFO   ";
+			}
+			if (level.intValue()  >= Level.CONFIG.intValue()) {
+				return "  KONFIG  ";
+			}
+			if (level.intValue()  >= Level.FINE.intValue()) {
+				return "   TRAG   ";
+			}
+			if (level.intValue()  >= Level.FINER.intValue()) {
+				return "  TRAG 2  ";
+			}
+			if (level.intValue()  >= Level.FINEST.intValue()) {
+				return "  TRAG 3  ";
+			}
+			return "?  ?  ?  ?";
+		}
+
+		private String formatThrown(Throwable thrown) {
+			StringWriter writer = new StringWriter();
+			thrown.printStackTrace(new PrintWriter(writer));
+			return writer.toString();
+		}
 	}
 }
