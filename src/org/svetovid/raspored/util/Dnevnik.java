@@ -2,6 +2,7 @@ package org.svetovid.raspored.util;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.io.UnsupportedEncodingException;
 import java.lang.StackWalker.Option;
 import java.lang.StackWalker.StackFrame;
 import java.time.Instant;
@@ -12,6 +13,7 @@ import java.util.logging.Formatter;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
 import java.util.logging.Logger;
+import java.util.logging.StreamHandler;
 
 /**
  * Pomocna klasa koja sluzi za zapisivanje poruka o graskama i drugim stvarima.
@@ -106,6 +108,29 @@ public class Dnevnik {
 	}
 
 	protected static DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss").withZone(ZoneId.systemDefault());
+
+	protected static class DnevnikConsoleHandler extends StreamHandler {
+
+		public DnevnikConsoleHandler() {
+			super(System.err, new DnevnikFormatter());
+			try {
+				setEncoding("UTF-8");
+			} catch (UnsupportedEncodingException e) {
+				// Nista, probali smo
+			}
+		}
+
+		@Override
+		public void publish(LogRecord record) {
+			super.publish(record);
+			flush();
+		}
+
+		@Override
+		public void close() {
+			flush();
+		}
+	}
 
 	protected static class DnevnikFormatter extends Formatter {
 
