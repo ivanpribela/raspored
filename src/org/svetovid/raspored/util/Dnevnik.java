@@ -1,10 +1,14 @@
 package org.svetovid.raspored.util;
 
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.lang.StackWalker.Option;
 import java.lang.StackWalker.StackFrame;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -128,6 +132,24 @@ public class Dnevnik {
 
 		@Override
 		public void close() {
+			flush();
+		}
+	}
+
+	protected static class DnevnikFileHandler extends StreamHandler {
+
+		public DnevnikFileHandler(Path path) throws IOException {
+			super(Files.newOutputStream(path, StandardOpenOption.CREATE), new DnevnikFormatter());
+			try {
+				setEncoding("UTF-8");
+			} catch (UnsupportedEncodingException e) {
+				// Nista, probali smo
+			}
+		}
+
+		@Override
+		public void publish(LogRecord record) {
+			super.publish(record);
 			flush();
 		}
 	}
