@@ -14,6 +14,7 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 import java.util.logging.Formatter;
+import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
 import java.util.logging.Logger;
@@ -111,6 +112,36 @@ public class Dnevnik {
 		return callerClassName.orElse("");
 	}
 
+	public static void podesi(Path folder) {
+
+		// Glavni dnevnik
+		Logger logger = Logger.getLogger("");
+		logger.setLevel(Level.ALL);
+		logger.setFilter(null);
+		for (Handler handler : logger.getHandlers()) {
+			logger.removeHandler(handler);
+		}
+
+		// Ispis na konzolu
+		DnevnikConsoleHandler consoleHandler = new DnevnikConsoleHandler();
+		consoleHandler.setLevel(Level.INFO);
+		logger.addHandler(consoleHandler);
+
+		// Ispis u fajl
+		Path fajl = folder.resolve(dateTimeFormatter.format(Instant.now()) + ".log");
+		try {
+			Files.createDirectories(folder);
+			DnevnikFileHandler fileHandler = new DnevnikFileHandler(fajl);
+			fileHandler.setFormatter(new DnevnikFormatter());
+			fileHandler.setLevel(Level.ALL);
+			logger.addHandler(fileHandler);
+		} catch (IOException e) {
+			greska("Nije moguce upisivati dnevnik u fajl \"%s\"", e, fajl); 
+		}
+
+	}
+
+	protected static DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("uuuuMMdd-HHmmss").withZone(ZoneId.systemDefault());
 	protected static DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss").withZone(ZoneId.systemDefault());
 
 	protected static class DnevnikConsoleHandler extends StreamHandler {
