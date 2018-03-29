@@ -12,6 +12,7 @@ import java.nio.file.StandardOpenOption;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.IllegalFormatException;
 import java.util.Optional;
 import java.util.logging.Formatter;
 import java.util.logging.Handler;
@@ -88,7 +89,11 @@ public class Dnevnik {
 	}
 
 	protected static void zapisi(Level level, String message, Throwable thrown, Object... arguments) {
-		message = String.format(message, arguments);
+		try {
+			message = String.format(message, arguments);
+		} catch (IllegalFormatException e) {
+			// Ne diramo poruku, neka ostane u originalu
+		}
 		Logger logger = findLogger();
 		if (thrown == null) {
 			logger.log(level, message);
@@ -128,15 +133,17 @@ public class Dnevnik {
 		logger.addHandler(consoleHandler);
 
 		// Ispis u fajl
-		Path fajl = folder.resolve(dateTimeFormatter.format(Instant.now()) + ".log");
-		try {
-			Files.createDirectories(folder);
-			DnevnikFileHandler fileHandler = new DnevnikFileHandler(fajl);
-			fileHandler.setFormatter(new DnevnikFormatter());
-			fileHandler.setLevel(Level.ALL);
-			logger.addHandler(fileHandler);
-		} catch (IOException e) {
-			greska("Nije moguce upisivati dnevnik u fajl \"%s\"", e, fajl); 
+		if (folder != null) {
+			Path fajl = folder.resolve(dateTimeFormatter.format(Instant.now()) + ".log");
+			try {
+				Files.createDirectories(folder);
+				DnevnikFileHandler fileHandler = new DnevnikFileHandler(fajl);
+				fileHandler.setFormatter(new DnevnikFormatter());
+				fileHandler.setLevel(Level.ALL);
+				logger.addHandler(fileHandler);
+			} catch (IOException e) {
+				greska("Nije moguce upisivati dnevnik u fajl \"%s\"", e, fajl); 
+			}
 		}
 
 	}
