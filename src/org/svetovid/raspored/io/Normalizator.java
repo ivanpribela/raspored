@@ -73,4 +73,16 @@ public final class Normalizator {
 			return string;
 		}
 	}
+
+	public static final class RegexPravilo extends Pravilo {
+
+		public RegexPravilo(String a, String b) {
+			super(a, b);
+		}
+
+		@Override
+		public String primeni(String string) {
+			return string.replaceAll(a, b);
+		}
+	}
 }
