@@ -59,4 +59,18 @@ public final class Normalizator {
 		public abstract String primeni(String string);
 
 	}
+
+	public static final class StringPravilo extends Pravilo {
+
+		public StringPravilo(String a, String b) {
+			super(a, b);
+		}
+
+		public String primeni(String string) {
+			if (string.equals(a)) {
+				return b;
+			}
+			return string;
+		}
+	}
 }
