@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.svetovid.raspored.util.Dnevnik;
+
 /**
  * Ova klasa sluzi za cuvanje pravila normalizacije podataka za jednu osobinu
  * casa.
@@ -44,6 +46,28 @@ public final class Normalizator {
 
 	public List<Pravilo> getPravila() {
 		return pravila;
+	}
+
+	public String normalizuj(String original) {
+		String string = original;
+		for (Pravilo pravilo : pravila) {
+			if (pravilo == null) {
+				continue;
+			}
+			while (true) {
+				String zamenjeno = pravilo.primeni(string);
+				if (zamenjeno.equals(string)) {
+					break;
+				}
+				string = zamenjeno;
+			}
+		}
+		if (string.equals(original)) {
+			Dnevnik.trag2("Bez promena:   \"%s\"", original, string);
+		} else {
+			Dnevnik.trag2("Normalizovano: \"%s\" -> \"%s\"", original, string);
+		}
+		return string;
 	}
 
 	public static abstract class Pravilo {
