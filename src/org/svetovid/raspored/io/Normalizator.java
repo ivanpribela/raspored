@@ -1,5 +1,13 @@
 package org.svetovid.raspored.io;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -68,6 +76,42 @@ public final class Normalizator {
 			Dnevnik.trag2("Normalizovano: \"%s\" -> \"%s\"", original, string);
 		}
 		return string;
+	}
+
+	public void ucitaj(Path putanja) throws IOException {
+		Dnevnik.trag("Učitavanje pravila za normalizator osobine \"%s\"", ime);
+		try (BufferedReader in = new BufferedReader(new InputStreamReader(Files.newInputStream(putanja)))) {
+			ucitaj(in);
+			Dnevnik.info("Normalizator osobine \"%s\" je spreman sa %d pravila", ime, pravila.size());
+		} catch (IOException e) {
+			Dnevnik.info("Normalizator osobine \"%s\" nije učitan", e, ime);
+			throw e;
+		}
+	}
+
+	public void ucitaj(URL url) throws IOException {
+		Dnevnik.trag("Učitavanje pravila za normalizator osobine \"%s\"", ime);
+		try (BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()))) {
+			ucitaj(in);
+			Dnevnik.info("Normalizator osobine \"%s\" je spreman sa %d pravila", ime, pravila.size());
+		} catch (IOException e) {
+			Dnevnik.info("Normalizator osobine \"%s\" nije učitan", e, ime);
+			throw e;
+		}
+	}
+
+	public void ucitaj(BufferedReader in) throws IOException {
+		// TODO Implementirati ucitavanje pravila
+	}
+
+	public void sacuvaj(Path putanja) throws IOException {
+		try (BufferedWriter out = new BufferedWriter(new OutputStreamWriter(Files.newOutputStream(putanja)))) {
+			sacuvaj(out);
+		}
+	}
+
+	public void sacuvaj(BufferedWriter out) throws IOException {
+		// TODO Implementirati cuvanje pravila
 	}
 
 	public static abstract class Pravilo {
