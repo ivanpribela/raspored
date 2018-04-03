@@ -111,7 +111,16 @@ public final class Normalizator {
 	}
 
 	public void sacuvaj(BufferedWriter out) throws IOException {
-		// TODO Implementirati cuvanje pravila
+		for (Pravilo pravilo : pravila) {
+			out.newLine();
+			out.write(pravilo instanceof StringPravilo ? "S\t" : "R\t");
+			out.write(pravilo.a);
+			out.newLine();
+			out.write(" \t");
+			out.write(pravilo.b);
+			out.newLine();
+			Dnevnik.trag("Upisano %s pravilo \"%s\" -> \"%s\"", pravilo instanceof StringPravilo ? "String" : "Regex", pravilo.a, pravilo.b);
+		}
 	}
 
 	public static abstract class Pravilo {
