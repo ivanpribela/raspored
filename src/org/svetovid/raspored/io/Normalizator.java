@@ -11,6 +11,8 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.svetovid.raspored.util.Dnevnik;
 
@@ -100,8 +102,50 @@ public final class Normalizator {
 		}
 	}
 
+	private static final Pattern linijaA = Pattern.compile("(S|R)(\\s)(.*)");
+	private static final Pattern linijaB = Pattern.compile("( )(\\s)(.*)");
+
 	public void ucitaj(BufferedReader in) throws IOException {
-		// TODO Implementirati ucitavanje pravila
+		String linija;
+		int brLinije = 0;
+		do {
+			linija = in.readLine();
+			brLinije++;
+			if (linija == null) {
+				continue;
+			}
+			Matcher matcher = linijaA.matcher(linija);
+			if (!matcher.matches()) {
+				Dnevnik.trag3("Linija %3d - Ignorisana:      %s", brLinije, linija);
+				continue;
+			}
+			String tip = matcher.group(1);
+			String delimiter = matcher.group(2);
+			String a = matcher.group(3);
+			Dnevnik.trag3("Linija %3d - Početak pravila: %s", brLinije, linija);
+			linija = in.readLine();
+			brLinije++;
+			if (linija == null) {
+				continue;
+			}
+			matcher = linijaB.matcher(linija);
+			if (!matcher.matches()) {
+				Dnevnik.trag3("Linija %3d - Ignorisana:      %s", brLinije, linija);
+				continue;
+			}
+			Dnevnik.trag3("Linija %3d - Kraj pravila:    %s", brLinije, linija);
+			if (!delimiter.equals(matcher.group(2))) {
+				continue;
+			}
+			String b = matcher.group(3);
+			if ("S".equalsIgnoreCase(tip)) {
+				pravila.add(new StringPravilo(a, b));
+				Dnevnik.trag("String pravilo \"%s\" -> \"%s\"", a, b);
+			} else {
+				pravila.add(new RegexPravilo(a, b));
+				Dnevnik.trag("Regex pravilo \"%s\" -> \"%s\"", a, b);
+			}
+		} while (linija != null);
 	}
 
 	public void sacuvaj(Path putanja) throws IOException {
