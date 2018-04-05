@@ -15,6 +15,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.svetovid.raspored.util.Dnevnik;
+import org.svetovid.raspored.util.Proveri;
 
 /**
  * Ova klasa sluzi za cuvanje pravila normalizacije podataka za jednu osobinu
@@ -28,25 +29,32 @@ public final class Normalizator {
 	private final List<Pravilo> pravila = new ArrayList<>();
 
 	public Normalizator(String ime) {
+		Proveri.argument(ime != null, "ime", ime);
 		this.ime = ime;
 	}
 
 	public Normalizator(String ime, Collection<Pravilo> pravila) {
 		this(ime);
-		this.pravila.addAll(pravila);
+		if (pravila != null) {
+			this.pravila.addAll(pravila);
+		}
 	}
 
 	public Normalizator(String ime, Pravilo... pravila) {
 		this(ime);
-		for (Pravilo pravilo : pravila) {
-			this.pravila.add(pravilo);
+		if (pravila != null) {
+			for (Pravilo pravilo : pravila) {
+				this.pravila.add(pravilo);
+			}
 		}
 	}
 
 	public Normalizator(String ime, Iterable<Pravilo> pravila) {
 		this(ime);
-		for (Pravilo pravilo : pravila) {
-			this.pravila.add(pravilo);
+		if (pravila != null) {
+			for (Pravilo pravilo : pravila) {
+				this.pravila.add(pravilo);
+			}
 		}
 	}
 
@@ -81,6 +89,7 @@ public final class Normalizator {
 	}
 
 	public void ucitaj(Path putanja) throws IOException {
+		Proveri.argument(putanja != null, "putanja", putanja);
 		Dnevnik.trag("Učitavanje pravila za normalizator osobine \"%s\"", ime);
 		try (BufferedReader in = new BufferedReader(new InputStreamReader(Files.newInputStream(putanja)))) {
 			ucitaj(in);
@@ -92,6 +101,7 @@ public final class Normalizator {
 	}
 
 	public void ucitaj(URL url) throws IOException {
+		Proveri.argument(url != null, "url", url);
 		Dnevnik.trag("Učitavanje pravila za normalizator osobine \"%s\"", ime);
 		try (BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()))) {
 			ucitaj(in);
@@ -106,6 +116,7 @@ public final class Normalizator {
 	private static final Pattern linijaB = Pattern.compile("( )(\\s)(.*)");
 
 	public void ucitaj(BufferedReader in) throws IOException {
+		Proveri.argument(in != null, "in", in);
 		String linija;
 		int brLinije = 0;
 		do {
@@ -149,12 +160,14 @@ public final class Normalizator {
 	}
 
 	public void sacuvaj(Path putanja) throws IOException {
+		Proveri.argument(putanja != null, "putanja", putanja);
 		try (BufferedWriter out = new BufferedWriter(new OutputStreamWriter(Files.newOutputStream(putanja)))) {
 			sacuvaj(out);
 		}
 	}
 
 	public void sacuvaj(BufferedWriter out) throws IOException {
+		Proveri.argument(out != null, "out", out);
 		for (Pravilo pravilo : pravila) {
 			out.newLine();
 			out.write(pravilo instanceof StringPravilo ? "S\t" : "R\t");
@@ -188,6 +201,9 @@ public final class Normalizator {
 		}
 
 		public String primeni(String string) {
+			if (string == null) {
+				return null;
+			}
 			if (string.equals(a)) {
 				return b;
 			}
@@ -203,6 +219,9 @@ public final class Normalizator {
 
 		@Override
 		public String primeni(String string) {
+			if (string == null) {
+				return null;
+			}
 			return string.replaceAll(a, b);
 		}
 	}
