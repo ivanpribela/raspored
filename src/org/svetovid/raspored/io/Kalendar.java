@@ -7,7 +7,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.List;
 
+import org.svetovid.raspored.model.Cas;
 import org.svetovid.raspored.util.Dnevnik;
 import org.svetovid.raspored.util.Proveri;
 
@@ -52,6 +54,20 @@ public final class Kalendar {
 			Dnevnik.info("Kalendar \"%s\" je preuzet", ime);
 		} catch (IOException e) {
 			Dnevnik.upozorenje("Kalendar \"%s\" nije je preuzet", e, ime);
+			throw e;
+		}
+	}
+
+	public List<Cas> parsiraj(Path folder, Parser parser) throws IOException {
+		Proveri.argument(folder != null, "folder", folder);
+		Proveri.argument(parser != null, "parser", parser);
+		Dnevnik.trag("Parsiranje kalendara \"%s\"", ime);
+		try {
+			List<Cas> casovi = parser.parsiraj(ime, folder.resolve(putanja));
+			Dnevnik.info("Kalendar \"%s\" je obrađen", ime);
+			return casovi;
+		} catch (IOException e) {
+			Dnevnik.upozorenje("Kalendar \"%s\" nije obrađen", e, ime);
 			throw e;
 		}
 	}
