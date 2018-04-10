@@ -115,4 +115,17 @@ public final class Cas {
 	public String toString() {
 		return id;
 	}
+
+	public Cas spojiSa(Cas that) throws IllegalArgumentException {
+		Proveri.argument(this.predmet.equals(that.predmet), "cas.predmet", this.predmet + " != " + that.predmet);
+		Proveri.argument(this.nastavnik.equals(that.nastavnik), "cas.nastavnik", this.nastavnik + " != " + that.nastavnik);
+		Proveri.argument(this.tipovi.equals(that.tipovi), "cas.tipovi", Tip.pretvoriUOznake(this.tipovi) + " != " + Tip.pretvoriUOznake(that.tipovi));
+		Proveri.argument(this.sala.equals(that.sala), "cas.sala", this.sala + " != " + that.sala);
+		Proveri.argument(this.id.equals(that.id), "cas.id", this.id + " != " + that.id);
+		LocalDateTime poslenjiDatumIzmene = this.datumIzmene.isAfter(that.datumIzmene) ? this.datumIzmene : that.datumIzmene;
+		Set<String> sviStudenti = new TreeSet<>();
+		sviStudenti.addAll(this.studenti);
+		sviStudenti.addAll(that.studenti);
+		return new Cas(sviStudenti, termin, predmet, nastavnik, tipovi, sala, id, poslenjiDatumIzmene);
+	}
 }
