@@ -11,7 +11,7 @@ import org.svetovid.raspored.util.Proveri;
 
 /**
  * Ova klasa predstavlja jedan cas.
- * 
+ *
  * @author Ivan Pribela
  */
 public final class Cas {
@@ -67,23 +67,23 @@ public final class Cas {
 	public String getPredmet() {
 		return predmet;
 	}
-	
+
 	public String getNastavnik() {
 		return nastavnik;
 	}
-	
+
 	public Set<Tip> getTipovi() {
 		return tipovi;
 	}
-	
+
 	public String getSala() {
 		return sala;
 	}
-	
+
 	public String getId() {
 		return id;
 	}
-	
+
 	public LocalDateTime getDatumIzmene() {
 		return datumIzmene;
 	}

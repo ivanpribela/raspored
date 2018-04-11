@@ -3,8 +3,8 @@ package org.svetovid.raspored.model;
 import org.svetovid.raspored.util.Proveri;
 
 /**
- * Ova klasa predstavlja jedan dan u nedelji. 
- * 
+ * Ova klasa predstavlja jedan dan u nedelji.
+ *
  * @author Ivan Pribela
  */
 public enum Dan {

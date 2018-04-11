@@ -5,7 +5,7 @@ import org.svetovid.raspored.util.Proveri;
 /**
  * Ova klasa predstavlja jedan termin za cas. On se sastoji od dana u nedelji,
  * vremena pocetka i vremena kraja.
- * 
+ *
  * @author Ivan Pribela
  */
 public final class Termin implements Comparable<Termin> {

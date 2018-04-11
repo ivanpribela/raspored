@@ -25,7 +25,7 @@ import org.svetovid.raspored.util.Proveri;
 
 /**
  * Ova klasa sluzi za ucitavanje kalendara u iCalendar formatu.
- * 
+ *
  * @author Ivan Pribela
  */
 public final class Parser {

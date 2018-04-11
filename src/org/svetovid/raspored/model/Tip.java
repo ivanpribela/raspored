@@ -7,8 +7,8 @@ import java.util.stream.Collectors;
 import org.svetovid.raspored.util.Proveri;
 
 /**
- * Ova klasa predstavlja jedan tip casa. 
- * 
+ * Ova klasa predstavlja jedan tip casa.
+ *
  * @author Ivan Pribela
  */
 public enum Tip {

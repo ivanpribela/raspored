@@ -20,7 +20,7 @@ import org.svetovid.raspored.util.Proveri;
 /**
  * Ova klasa sluzi za cuvanje pravila normalizacije podataka za jednu osobinu
  * casa.
- * 
+ *
  * @author Ivan Pribela
  */
 public final class Normalizator {
