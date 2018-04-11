@@ -65,9 +65,9 @@ public final class Parser {
 		}
 	}
 
-	public List<Cas> parsiraj(String naziv, Path path) throws IOException {
-		Proveri.argument(path != null, "path", path);
-		try (BufferedReader in = new BufferedReader(new InputStreamReader(Files.newInputStream(path)))) {
+	public List<Cas> parsiraj(String naziv, Path putanja) throws IOException {
+		Proveri.argument(putanja != null, "putanja", putanja);
+		try (BufferedReader in = new BufferedReader(new InputStreamReader(Files.newInputStream(putanja)))) {
 			return parsiraj(naziv, in);
 		}
 	}
