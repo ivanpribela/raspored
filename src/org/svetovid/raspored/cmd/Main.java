@@ -1,4 +1,4 @@
-package org.svetovid.raspored;
+package org.svetovid.raspored.cmd;
 
 import java.io.IOException;
 import java.nio.file.Paths;
