@@ -13,9 +13,21 @@ import org.svetovid.raspored.model.Tip;
 public class Main {
 
 	public static void main(String[] arguments) throws IOException {
+
+		// Obrada argumenata
+		Opcije opcije = new Opcije();
+		for (int i = 0; i < arguments.length / 2; i++) {
+			String naziv = arguments[2 * i];
+			String vrednost = arguments[2 * i + 1];
+			argument(i, naziv, vrednost, opcije);
+		}
+
+		// Parsiranje kalendara
 		Parser parser = new Parser();
 		List<Cas> casovi = parser.parsiraj(arguments[0], Paths.get(arguments[1]));
 		Collections.sort(casovi, (cas1, cas2) -> cas1.getTermin().compareTo(cas2.getTermin()));
+
+		// Stampanje rasporeda
 		Dan dan = null;
 		for (Cas cas : casovi) {
 			if (dan != cas.getDan()) {
@@ -24,5 +36,10 @@ public class Main {
 			System.out.printf("%10s   %s %s-%s   %-50s %-8s %-30s %-15s %s   %s%n", cas.getStudenti(), cas.getDan().getOznaka(), cas.getVremeOd(), cas.getVremeDo(), cas.getPredmet(), Tip.pretvoriUOznake(cas.getTipovi()), cas.getNastavnik(), cas.getSala(), cas.getId(), cas.getDatumIzmene());
 			dan = cas.getDan();
 		}
+
+	}
+
+	protected static void argument(int pozicija, String naziv, String vrednost, Opcije opcije) throws IllegalArgumentException {
+		// TODO implementirati obradu opcija
 	}
 }
