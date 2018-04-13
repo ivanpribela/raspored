@@ -9,6 +9,7 @@ import org.svetovid.raspored.io.Parser;
 import org.svetovid.raspored.model.Cas;
 import org.svetovid.raspored.model.Dan;
 import org.svetovid.raspored.model.Tip;
+import org.svetovid.raspored.util.Proveri;
 
 public class Main {
 
@@ -40,6 +41,99 @@ public class Main {
 	}
 
 	protected static void argument(int pozicija, String naziv, String vrednost, Opcije opcije) throws IllegalArgumentException {
-		// TODO implementirati obradu opcija
+		switch (naziv) {
+
+			////////////
+			// Opcije //
+			////////////
+
+			// "/putanja/do/foldera"
+			case "--folder":
+				// TODO
+				break;
+
+			// "uvek" "nikad" "kadfali"
+			case "--preuzmi":
+				// TODO
+				break;
+
+			///////////
+			// Ispis //
+			///////////
+
+			// "%-15s %v %25p %25n %t %l %i %z %%"
+			case "-f": case "--format":
+				format(vrednost, opcije);
+				break;
+
+			// "1dvi" "ptdv"
+			case "-r": case "--redosled": case "--sort":
+				redosled(vrednost, opcije);
+				break;
+
+			/////////////
+			// Filteri //
+			/////////////
+
+			// "=1-IT" "RN"
+			case "-s": case "--smer":
+				// TODO implementirati
+				break;
+
+			// "pon" "uto"
+			case "-d": case "--dan":
+				// TODO implementirati
+				break;
+
+			// "od>=12:15" "do<15.00"
+			case "-v": case "--vreme":
+				// TODO implementirati
+				break;
+
+			// "=Naziv predmeta" "predm"
+			case "-p": case "--predmet":
+				// TODO implementirati
+				break;
+
+			// "=Pera Peric" "Pera"
+			case "-n": case "--nastavnik":
+				// TODO implementirati
+				break;
+
+			// "=P" "rv"
+			case "-t": case "--tip":
+				// TODO implementirati
+				break;
+
+			// "=Sala 65" "65"
+			case "-l": case "--sala": case "--lokacija":
+				// TODO implementirati
+				break;
+
+			// "=1a2b3c4d5e6f@domen.com" "C4D5"
+			case "-i": case "--id":
+				// TODO implementirati
+				break;
+
+			// "<2m" ">3d"
+			case "-z": case "--izmena":
+				// TODO implementirati
+				break;
+
+			///////////////
+			// Nepoznato //
+			///////////////
+
+			default:
+				throw Proveri.argument("Nepoznata opcija", naziv);
+		}
+	}
+
+	protected static void format(String vrednost, Opcije opcije) throws IllegalArgumentException {
+		// TODO implementirati
+	}
+
+	protected static void redosled(String vrednost, Opcije opcije) throws IllegalArgumentException {
+		// TODO implementirati
 	}
 }
