@@ -1,5 +1,6 @@
 package org.svetovid.raspored.util;
 
+import java.util.Set;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
@@ -28,6 +29,23 @@ public abstract class Filter {
 				return false;
 			}
 			return vrednost.toUpperCase().contains(izraz.toUpperCase());
+		};
+	}
+
+	public static Predicate<Cas> skupStringSadrzi(String izraz, Function<Cas, Set<String>> funkcija) throws IllegalArgumentException {
+		Proveri.argument(izraz != null, "izraz", izraz);
+		Proveri.argument(funkcija != null, "funkcija", funkcija);
+		return (Cas cas) -> {
+			Set<String> vrednost = funkcija.apply(cas);
+			if (vrednost == null) {
+				return false;
+			}
+			for (String v : vrednost) {
+				if (v.toUpperCase().contains(izraz.toUpperCase())) {
+					return true;
+				}
+			}
+			return false;
 		};
 	}
 }
