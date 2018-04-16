@@ -42,6 +42,16 @@ public abstract class Filter {
 		};
 	}
 
+	public static Predicate<Cas> skupStringova(String izraz, Function<Cas, Set<String>> funkcija) throws IllegalArgumentException {
+		Proveri.argument(izraz != null, "izraz", izraz);
+		Proveri.argument(funkcija != null, "funkcija", funkcija);
+		if (izraz.startsWith("=")) {
+			return skupStringovaJednak(izraz.substring(1), funkcija); 
+		} else {
+			return skupStringSadrzi(izraz, funkcija); 
+		}
+	}
+
 	public static Predicate<Cas> skupStringovaJednak(String izraz, Function<Cas, Set<String>> funkcija) throws IllegalArgumentException {
 		Proveri.argument(izraz != null, "izraz", izraz);
 		Proveri.argument(funkcija != null, "funkcija", funkcija);
