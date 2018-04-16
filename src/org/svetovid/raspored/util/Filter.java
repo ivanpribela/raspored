@@ -8,6 +8,16 @@ import org.svetovid.raspored.model.Cas;
 
 public abstract class Filter {
 
+	public static Predicate<Cas> string(String izraz, Function<Cas, String> funkcija) throws IllegalArgumentException {
+		Proveri.argument(izraz != null, "izraz", izraz);
+		Proveri.argument(funkcija != null, "funkcija", funkcija);
+		if (izraz.startsWith("=")) {
+			return stringJednak(izraz.substring(1), funkcija); 
+		} else {
+			return stringSadrzi(izraz, funkcija); 
+		}
+	}
+
 	public static Predicate<Cas> stringJednak(String izraz, Function<Cas, String> funkcija) throws IllegalArgumentException {
 		Proveri.argument(izraz != null, "izraz", izraz);
 		Proveri.argument(funkcija != null, "funkcija", funkcija);
