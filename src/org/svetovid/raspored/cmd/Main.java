@@ -9,6 +9,7 @@ import org.svetovid.raspored.io.Parser;
 import org.svetovid.raspored.model.Cas;
 import org.svetovid.raspored.model.Dan;
 import org.svetovid.raspored.model.Tip;
+import org.svetovid.raspored.util.Filter;
 import org.svetovid.raspored.util.Proveri;
 
 public class Main {
@@ -77,12 +78,12 @@ public class Main {
 
 			// "=1-IT" "RN"
 			case "-s": case "--smer":
-				// TODO implementirati
+				opcije.addFilter("S", Filter.skupStringova(vrednost, Cas::getStudenti));
 				break;
 
 			// "pon" "uto"
 			case "-d": case "--dan":
-				// TODO implementirati
+				opcije.addFilter("D", Filter.stringJednak(vrednost, cas -> cas.getDan().getOznaka()));
 				break;
 
 			// "od>=12:15" "do<15.00"
@@ -92,27 +93,27 @@ public class Main {
 
 			// "=Naziv predmeta" "predm"
 			case "-p": case "--predmet":
-				// TODO implementirati
+				opcije.addFilter("P", Filter.string(vrednost, Cas::getPredmet));
 				break;
 
 			// "=Pera Peric" "Pera"
 			case "-n": case "--nastavnik":
-				// TODO implementirati
+				opcije.addFilter("N", Filter.string(vrednost, Cas::getNastavnik));
 				break;
 
 			// "=P" "rv"
 			case "-t": case "--tip":
-				// TODO implementirati
+				opcije.addFilter("T", Filter.string(vrednost, cas -> Tip.pretvoriUOznake(cas.getTipovi())));
 				break;
 
 			// "=Sala 65" "65"
 			case "-l": case "--sala": case "--lokacija":
-				// TODO implementirati
+				opcije.addFilter("L", Filter.string(vrednost, Cas::getSala));
 				break;
 
 			// "=1a2b3c4d5e6f@domen.com" "C4D5"
 			case "-i": case "--id":
-				// TODO implementirati
+				opcije.addFilter("I", Filter.string(vrednost, Cas::getId));
 				break;
 
 			// "<2m" ">3d"
