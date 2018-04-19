@@ -1,5 +1,6 @@
 package org.svetovid.raspored.util;
 
+import java.time.LocalDateTime;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -83,6 +84,30 @@ public abstract class Filter {
 				}
 			}
 			return false;
+		};
+	}
+
+	public static Predicate<Cas> datumPre(LocalDateTime granica, Function<Cas, LocalDateTime> funkcija) throws IllegalArgumentException {
+		Proveri.argument(granica != null, "granica", granica);
+		Proveri.argument(funkcija != null, "funkcija", funkcija);
+		return (Cas cas) -> {
+			LocalDateTime vrednost = funkcija.apply(cas);
+			if (vrednost == null) {
+				return false;
+			}
+			return vrednost.isBefore(granica);
+		};
+	}
+
+	public static Predicate<Cas> datumPosle(LocalDateTime granica, Function<Cas, LocalDateTime> funkcija) throws IllegalArgumentException {
+		Proveri.argument(granica != null, "granica", granica);
+		Proveri.argument(funkcija != null, "funkcija", funkcija);
+		return (Cas cas) -> {
+			LocalDateTime vrednost = funkcija.apply(cas);
+			if (vrednost == null) {
+				return false;
+			}
+			return vrednost.isAfter(granica);
 		};
 	}
 }
