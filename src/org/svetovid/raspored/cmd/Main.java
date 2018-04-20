@@ -118,7 +118,7 @@ public class Main {
 
 			// "<2m" ">3d"
 			case "-z": case "--izmena":
-				// TODO implementirati
+				opcije.addFilter("Z" + pozicija, Filter.datum(vrednost, Cas::getDatumIzmene));
 				break;
 
 			///////////////

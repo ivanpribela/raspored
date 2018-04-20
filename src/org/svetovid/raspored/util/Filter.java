@@ -1,6 +1,8 @@
 package org.svetovid.raspored.util;
 
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalUnit;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -85,6 +87,33 @@ public abstract class Filter {
 			}
 			return false;
 		};
+	}
+
+	public static Predicate<Cas> datum(String izraz, Function<Cas, LocalDateTime> funkcija) throws IllegalArgumentException {
+		Proveri.argument(izraz != null, "izraz", izraz);
+		Proveri.argument(izraz.startsWith("<") || izraz.startsWith(">"), "izraz", izraz);
+		Proveri.argument(funkcija != null, "funkcija", funkcija);
+		int j = izraz.length() - 1;
+		int kolicina = Integer.parseInt(izraz.substring(1, j));
+		char c = Character.toLowerCase(izraz.charAt(j));
+		TemporalUnit jedinica;
+		if (c == 's' || c == 'h') {
+			jedinica = ChronoUnit.HOURS;
+		} else if (c == 'd') {
+			jedinica = ChronoUnit.DAYS;
+		} else if (c == 'n' || c == 'w') {
+			jedinica = ChronoUnit.WEEKS;
+		} else if (c == 'm') {
+			jedinica = ChronoUnit.MONTHS;
+		} else {
+			throw Proveri.argument("izraz", izraz);
+		}
+		LocalDateTime granica = LocalDateTime.now().minus(kolicina, jedinica);
+		if (izraz.startsWith("<")) {
+			return datumPosle(granica, funkcija); 
+		} else {
+			return datumPre(granica, funkcija); 
+		}
 	}
 
 	public static Predicate<Cas> datumPre(LocalDateTime granica, Function<Cas, LocalDateTime> funkcija) throws IllegalArgumentException {
