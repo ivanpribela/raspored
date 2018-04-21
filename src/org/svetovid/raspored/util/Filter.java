@@ -5,9 +5,13 @@ import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalUnit;
 import java.util.Set;
 import java.util.function.Function;
+import java.util.function.IntPredicate;
 import java.util.function.Predicate;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.svetovid.raspored.model.Cas;
+import org.svetovid.raspored.model.Vreme;
 
 public abstract class Filter {
 
@@ -137,6 +141,45 @@ public abstract class Filter {
 				return false;
 			}
 			return vrednost.isAfter(granica);
+		};
+	}
+
+	protected static final Pattern mustraZaTermin = Pattern.compile("(?i)(od|do)(<|<=|>|>=|=|<>)(\\d\\d)[.:-](\\d\\d)");
+
+	public static Predicate<Cas> termin(String izraz) throws IllegalArgumentException {
+		Matcher m = mustraZaTermin.matcher(izraz);
+		Proveri.argument(m.matches(), "izraz", izraz);
+		try {
+			int sat = Integer.parseInt(m.group(3));
+			int minut = Integer.parseInt(m.group(4));
+			Vreme granica = new Vreme(sat, minut);
+			String relacija = m.group(2);
+			IntPredicate poredjenje = "<".equals(relacija) ? x -> x <  0 :
+			                         "<=".equals(relacija) ? x -> x <= 0 :
+			                          ">".equals(relacija) ? x -> x >  0 :
+			                         ">=".equals(relacija) ? x -> x >= 0 :
+			                          "=".equals(relacija) ? x -> x == 0 :
+			                                                 x -> x == 0;
+			if ("od".equals(m.group(1))) {
+				return termin(granica, Cas::getVremeOd, poredjenje);
+			} else {
+				return termin(granica, Cas::getVremeDo, poredjenje);
+			}
+		} catch (IllegalArgumentException e) {
+			throw Proveri.argument("izraz", izraz, e);
+		}
+	}
+
+	public static Predicate<Cas> termin(Vreme granica, Function<Cas, Vreme> funkcija, IntPredicate poredjenje) throws IllegalArgumentException {
+		Proveri.argument(granica != null, "granica", granica);
+		Proveri.argument(funkcija != null, "funkcija", funkcija);
+		Proveri.argument(poredjenje != null, "poredjenje", poredjenje);
+		return (Cas cas) -> {
+			Vreme vrednost = funkcija.apply(cas);
+			if (vrednost == null) {
+				return false;
+			}
+			return poredjenje.test(vrednost.compareTo(granica));
 		};
 	}
 }

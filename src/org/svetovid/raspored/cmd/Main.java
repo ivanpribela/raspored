@@ -88,7 +88,7 @@ public class Main {
 
 			// "od>=12:15" "do<15.00"
 			case "-v": case "--vreme":
-				// TODO implementirati
+				opcije.addFilter("V" + pozicija, Filter.termin(vrednost));
 				break;
 
 			// "=Naziv predmeta" "predm"
