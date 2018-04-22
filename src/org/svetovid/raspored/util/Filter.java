@@ -3,12 +3,15 @@ package org.svetovid.raspored.util;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalUnit;
+import java.util.List;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.function.IntPredicate;
 import java.util.function.Predicate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 import org.svetovid.raspored.model.Cas;
 import org.svetovid.raspored.model.Vreme;
@@ -180,6 +183,21 @@ public abstract class Filter {
 				return false;
 			}
 			return poredjenje.test(vrednost.compareTo(granica));
+		};
+	}
+
+	public static Predicate<Cas> konjunkcija(Iterable<Predicate<Cas>> filteri) throws IllegalArgumentException {
+		Proveri.argument(filteri != null, "filteri", filteri);
+		List<Predicate<Cas>> listaFiltera = StreamSupport.stream(filteri.spliterator(), false)
+				.filter(filter -> filter != null)
+				.collect(Collectors.toList());
+		return (Cas cas) -> {
+			for (Predicate<Cas> filter : listaFiltera) {
+				if (!filter.test(cas)) {
+					return false;
+				}
+			}
+			return true;
 		};
 	}
 }
