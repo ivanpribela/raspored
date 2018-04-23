@@ -200,4 +200,19 @@ public abstract class Filter {
 			return true;
 		};
 	}
+
+	public static Predicate<Cas> disjunkcija(Iterable<Predicate<Cas>> filteri) throws IllegalArgumentException {
+		Proveri.argument(filteri != null, "filteri", filteri);
+		List<Predicate<Cas>> listaFiltera = StreamSupport.stream(filteri.spliterator(), false)
+				.filter(filter -> filter != null)
+				.collect(Collectors.toList());
+		return (Cas cas) -> {
+			for (Predicate<Cas> filter : listaFiltera) {
+				if (filter.test(cas)) {
+					return true;
+				}
+			}
+			return false;
+		};
+	}
 }
