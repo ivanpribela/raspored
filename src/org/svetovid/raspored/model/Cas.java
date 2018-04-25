@@ -43,10 +43,12 @@ public final class Cas {
 
 	public Cas(Set<String> studenti, Termin termin, String predmet, String nastavnik, Set<Tip> tipovi, String sala, String id, LocalDateTime datumIzmene) throws IllegalArgumentException {
 		Proveri.argument(studenti != null, "studenti", studenti);
+		Proveri.elemente(x -> x != null, "studenti", studenti);
 		Proveri.argument(termin != null, "termin", termin);
 		Proveri.argument(predmet != null, "predmet", predmet);
 		Proveri.argument(nastavnik != null, "nastavnik", nastavnik);
 		Proveri.argument(tipovi != null, "tipovi", tipovi);
+		Proveri.elemente(x -> x != null, "tipovi", tipovi);
 		Proveri.argument(sala != null, "sala", sala);
 		Proveri.argument(id != null, "id", id);
 		Proveri.argument(datumIzmene != null, "datumIzmene", datumIzmene);
