@@ -22,6 +22,11 @@ import org.svetovid.raspored.model.Cas;
 
 public class Format {
 
+	public static Function<Cas, String> konstanta(String konstanta) {
+		Proveri.argument(konstanta != null, "konstanta", konstanta);
+		return (Cas cas) -> konstanta;
+	}
+
 	public static Function<Cas, String> kolona(Function<Cas, String> funkcija) {
 		Proveri.argument(funkcija != null, "funkcija", funkcija);
 		return (Cas cas) -> funkcija.apply(cas);
