@@ -16,7 +16,10 @@
 
 package org.svetovid.raspored.util;
 
+import java.util.List;
 import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 import org.svetovid.raspored.model.Cas;
 
@@ -30,5 +33,18 @@ public class Format {
 	public static Function<Cas, String> kolona(Function<Cas, String> funkcija) {
 		Proveri.argument(funkcija != null, "funkcija", funkcija);
 		return (Cas cas) -> funkcija.apply(cas);
+	}
+	public static Function<Cas, String> konkatenacija(Iterable<Function<Cas, String>> formati) {
+		Proveri.argument(formati != null, "formati", formati);
+		List<Function<Cas, String>> listaFormata = StreamSupport.stream(formati.spliterator(), false)
+				.filter(filter -> filter != null)
+				.collect(Collectors.toList());
+		return (Cas cas) -> {
+			StringBuilder rezultat = new StringBuilder();
+			for (Function<Cas, String> format : listaFormata) {
+				rezultat.append(format.apply(cas));
+			}
+			return rezultat.toString();
+		};
 	}
 }
