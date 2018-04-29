@@ -30,10 +30,13 @@ public class Format {
 		return (Cas cas) -> konstanta;
 	}
 
-	public static Function<Cas, String> kolona(Function<Cas, String> funkcija) {
+	public static Function<Cas, String> kolona(Function<Cas, String> funkcija, int sirina, Poravnanje poravnanje) {
 		Proveri.argument(funkcija != null, "funkcija", funkcija);
-		return (Cas cas) -> funkcija.apply(cas);
+		Proveri.argument(sirina >= 0, "sirina", sirina);
+		Proveri.argument(poravnanje != null, "poravnanje", poravnanje);
+		return (Cas cas) -> poravnanje.poravnaj(funkcija.apply(cas), sirina);
 	}
+
 	public static Function<Cas, String> konkatenacija(Iterable<Function<Cas, String>> formati) {
 		Proveri.argument(formati != null, "formati", formati);
 		List<Function<Cas, String>> listaFormata = StreamSupport.stream(formati.spliterator(), false)
