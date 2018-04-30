@@ -18,7 +18,41 @@ package org.svetovid.raspored.util;
 
 public enum Poravnanje {
 
-	NISTA(""), LEVO("+"), DESNO("-"), CENTAR("*");
+	NISTA("") {
+		@Override
+		public String poravnaj(String original, int sirina) {
+			Proveri.argument(original != null, "original", original);
+			Proveri.argument(sirina >= 0, "sirina", sirina);
+			return original;
+		}
+	},
+
+	LEVO("+"){
+		@Override
+		public String poravnaj(String original, int sirina) {
+			Proveri.argument(original != null, "original", original);
+			Proveri.argument(sirina >= 0, "sirina", sirina);
+			return original;
+		}
+	},
+
+	DESNO("-") {
+		@Override
+		public String poravnaj(String original, int sirina) {
+			Proveri.argument(original != null, "original", original);
+			Proveri.argument(sirina >= 0, "sirina", sirina);
+			return original;
+		}
+	},
+
+	CENTAR("*") {
+		@Override
+		public String poravnaj(String original, int sirina) {
+			Proveri.argument(original != null, "original", original);
+			Proveri.argument(sirina >= 0, "sirina", sirina);
+			return original;
+		}
+	};
 
 	private final String oznaka;
 
@@ -30,9 +64,14 @@ public enum Poravnanje {
 		return oznaka;
 	}
 
-	public String poravnaj(String original, int sirina) {
-		Proveri.argument(original != null, "original", original);
-		Proveri.argument(sirina >= 0, "sirina", sirina);
-		return original;
+	public abstract String poravnaj(String original, int sirina);
+
+	public static Poravnanje pretvoriIzOznaka(String oznaka) throws IllegalArgumentException {
+		for (Poravnanje poravnanje : values()) {
+			if (poravnanje.oznaka.equals(oznaka)) {
+				return poravnanje;
+			}
+		}
+		throw Proveri.argument("oznaka", oznaka);
 	}
 }
