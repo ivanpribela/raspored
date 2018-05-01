@@ -62,7 +62,28 @@ public enum Poravnanje {
 		public String poravnaj(String original, int sirina) {
 			Proveri.argument(original != null, "original", original);
 			Proveri.argument(sirina >= 0, "sirina", sirina);
+			int l = original.length();
+			if (l == sirina) {
 			return original;
+		}
+			if (l > sirina) {
+				if (sirina == 0) {
+					return "";
+				}
+				if (sirina == 1) {
+					return ".";
+				}
+				if (sirina == 2) {
+					return "..";
+				}
+				return "..." + original.substring(l - sirina + 3, l);
+			}
+			StringBuilder rezultat = new StringBuilder(sirina);
+			for (int i = 0; i < sirina - l; i++) {
+				rezultat.append(' ');
+			}
+			rezultat.append(original);
+			return rezultat.toString();
 		}
 	},
 
