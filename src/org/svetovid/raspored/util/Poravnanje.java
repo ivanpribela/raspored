@@ -34,8 +34,8 @@ public enum Poravnanje {
 			Proveri.argument(sirina >= 0, "sirina", sirina);
 			int l = original.length();
 			if (l == sirina) {
-			return original;
-		}
+				return original;
+			}
 			if (l > sirina) {
 				if (sirina == 0) {
 					return "";
@@ -64,8 +64,8 @@ public enum Poravnanje {
 			Proveri.argument(sirina >= 0, "sirina", sirina);
 			int l = original.length();
 			if (l == sirina) {
-			return original;
-		}
+				return original;
+			}
 			if (l > sirina) {
 				if (sirina == 0) {
 					return "";
@@ -92,7 +92,40 @@ public enum Poravnanje {
 		public String poravnaj(String original, int sirina) {
 			Proveri.argument(original != null, "original", original);
 			Proveri.argument(sirina >= 0, "sirina", sirina);
-			return original;
+			int l = original.length();
+			if (l == sirina) {
+				return original;
+			}
+			if (l > sirina) {
+				if (sirina == 0) {
+					return "";
+				}
+				if (sirina == 1) {
+					return ".";
+				}
+				if (sirina == 2) {
+					return "..";
+				}
+				if (sirina == 3) {
+					return "...";
+				}
+				if (sirina == 4) {
+					return "....";
+				}
+				if (sirina == 5) {
+					return ".....";
+				}
+				return "..." + original.substring((l - sirina) / 2 + 3, (l + sirina) / 2 - 3) + "..."; // skinuli jedan vise s kraja
+			}
+			StringBuilder rezultat = new StringBuilder(sirina);
+			for (int i = 0; i < (sirina - l + 1) / 2; i++) {
+				rezultat.append(' ');
+			}
+			rezultat.append(original);
+			for (int i = 0; i < (sirina - l) / 2; i++) {
+				rezultat.append(' ');
+			}
+			return rezultat.toString();
 		}
 	};
 
