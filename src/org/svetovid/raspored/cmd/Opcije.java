@@ -16,6 +16,7 @@
 
 package org.svetovid.raspored.cmd;
 
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -27,6 +28,7 @@ import org.svetovid.raspored.model.Cas;
 public class Opcije {
 
 	public Opcije() {
+		putanja = null;
 		filteri = new LinkedHashMap<>();
 	}
 
@@ -34,7 +36,17 @@ public class Opcije {
 	// Opcije //
 	////////////
 
-	// TODO Dodati cuvanje standardnih opcija
+	protected Path putanja;
+
+	public Path getPutanja() {
+		return putanja;
+	}
+
+	public void setPutanja(Path putanja) {
+		this.putanja = putanja;
+	}
+
+	// TODO Dodati cuvanje ostalih standardnih opcija
 
 	///////////
 	// Ispis //
