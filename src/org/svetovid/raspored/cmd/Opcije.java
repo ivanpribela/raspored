@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 import java.util.function.Predicate;
 
 import org.svetovid.raspored.model.Cas;
@@ -29,6 +30,7 @@ public class Opcije {
 
 	public Opcije() {
 		putanja = null;
+		format = null;
 		filteri = new LinkedHashMap<>();
 	}
 
@@ -52,7 +54,15 @@ public class Opcije {
 	// Ispis //
 	///////////
 
-	// TODO Dodati cuvanje opcija za ispis
+	protected Function<Cas, String> format;
+
+	public Function<Cas, String> getFormat() {
+		return format;
+	}
+
+	public void setFormat(Function<Cas, String> format) {
+		this.format = format;
+	}
 
 	/////////////
 	// Filteri //
