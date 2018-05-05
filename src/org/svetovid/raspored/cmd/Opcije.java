@@ -18,6 +18,7 @@ package org.svetovid.raspored.cmd;
 
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,6 +31,8 @@ public class Opcije {
 
 	public Opcije() {
 		putanja = null;
+		redosled = null;
+		grupisanje = 0;
 		format = null;
 		filteri = new LinkedHashMap<>();
 	}
@@ -54,7 +57,25 @@ public class Opcije {
 	// Ispis //
 	///////////
 
+	protected Comparator<Cas> redosled;
+	protected int grupisanje;
 	protected Function<Cas, String> format;
+
+	public Comparator<Cas> getRedosled() {
+		return redosled;
+	}
+
+	public void setRedosled(Comparator<Cas> redosled) {
+		this.redosled = redosled;
+	}
+
+	public int getGrupisanje() {
+		return grupisanje;
+	}
+
+	public void setGrupisanje(int grupisanje) {
+		this.grupisanje = grupisanje;
+	}
 
 	public Function<Cas, String> getFormat() {
 		return format;
