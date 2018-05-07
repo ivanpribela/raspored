@@ -66,7 +66,11 @@ public class Main {
 
 			// "/putanja/do/foldera"
 			case "--folder":
-				// TODO
+				try {
+					opcije.setPutanja(Paths.get(vrednost));
+				} catch (InvalidPathException e) {
+					throw Proveri.argument("Putanja nije dobra", vrednost, e);
+				}
 				break;
 
 			// "uvek" "nikad" "kadfali"
