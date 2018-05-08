@@ -17,9 +17,13 @@
 package org.svetovid.raspored.cmd;
 
 import java.io.IOException;
+import java.nio.file.InvalidPathException;
 import java.nio.file.Paths;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 import org.svetovid.raspored.io.Parser;
 import org.svetovid.raspored.model.Cas;
@@ -44,6 +48,15 @@ public class Main {
 		Parser parser = new Parser();
 		List<Cas> casovi = parser.parsiraj(arguments[0], Paths.get(arguments[1]));
 		Collections.sort(casovi, (cas1, cas2) -> cas1.getTermin().compareTo(cas2.getTermin()));
+
+		// Obrada rasporeda
+		Predicate<Cas> filter = opcije.getFilter();
+		Comparator<Cas> redosled = opcije.getRedosled();
+		int grupisanje = opcije.getGrupisanje();
+		casovi = casovi.stream()
+				.filter(filter)
+				.sorted(redosled)
+				.collect(Collectors.toList());
 
 		// Stampanje rasporeda
 		Dan dan = null;
