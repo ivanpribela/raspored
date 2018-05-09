@@ -22,12 +22,12 @@ import java.nio.file.Paths;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import org.svetovid.raspored.io.Parser;
 import org.svetovid.raspored.model.Cas;
-import org.svetovid.raspored.model.Dan;
 import org.svetovid.raspored.model.Tip;
 import org.svetovid.raspored.util.Filter;
 import org.svetovid.raspored.util.Proveri;
@@ -59,15 +59,18 @@ public class Main {
 				.collect(Collectors.toList());
 
 		// Stampanje rasporeda
-		Dan dan = null;
+		Function<Cas, String> format = opcije.getFormat();
+		Cas prethodni = null;
 		for (Cas cas : casovi) {
-			if (dan != cas.getDan()) {
+			int delta = prethodni == null ? 0 : redosled.compare(cas, prethodni);
+			if (delta != 0 && delta * delta <= grupisanje * grupisanje) {
+				for (int i = 0; i < grupisanje - delta + 1; i++) {
 					System.out.println();
 				}
-			System.out.printf("%10s   %s %s-%s   %-50s %-8s %-30s %-15s %s   %s%n", cas.getStudenti(), cas.getDan().getOznaka(), cas.getVremeOd(), cas.getVremeDo(), cas.getPredmet(), Tip.pretvoriUOznake(cas.getTipovi()), cas.getNastavnik(), cas.getSala(), cas.getId(), cas.getDatumIzmene());
-			dan = cas.getDan();
 			}
-
+			System.out.println(format.apply(cas));
+			prethodni = cas;
+		}
 	}
 
 	protected static void argument(int pozicija, String naziv, String vrednost, Opcije opcije) throws IllegalArgumentException {
