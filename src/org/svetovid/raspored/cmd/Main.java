@@ -19,17 +19,22 @@ package org.svetovid.raspored.cmd;
 import java.io.IOException;
 import java.nio.file.InvalidPathException;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import org.svetovid.raspored.io.Parser;
 import org.svetovid.raspored.model.Cas;
 import org.svetovid.raspored.model.Tip;
 import org.svetovid.raspored.util.Filter;
+import org.svetovid.raspored.util.Format;
+import org.svetovid.raspored.util.Poravnanje;
 import org.svetovid.raspored.util.Proveri;
 
 public class Main {
@@ -167,7 +172,21 @@ public class Main {
 	}
 
 	protected static void format(String vrednost, Opcije opcije) throws IllegalArgumentException {
-		// TODO implementirati
+
+		// Provera argumenata
+		Proveri.argument(!vrednost.isEmpty(), "format", vrednost);
+
+		// Kolone
+		Pattern mustra = Pattern.compile("%([*+-]?)(\\d*)([sdvpntliz%])");
+		Matcher matcher = mustra.matcher(vrednost);
+		List<Function<Cas, String>> formati = new ArrayList<>();
+		while (matcher.find()) {
+			// TODO Implementirati
+		}
+
+		// Postavimo format
+		opcije.setFormat(Format.konkatenacija(formati));
+
 	}
 
 	protected static void redosled(String vrednost, Opcije opcije) throws IllegalArgumentException {
