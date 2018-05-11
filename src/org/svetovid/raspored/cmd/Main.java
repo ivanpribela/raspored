@@ -180,8 +180,29 @@ public class Main {
 		Pattern mustra = Pattern.compile("%([*+-]?)(\\d*)([sdvpntliz%])");
 		Matcher matcher = mustra.matcher(vrednost);
 		List<Function<Cas, String>> formati = new ArrayList<>();
+		int pocetak = 0;
 		while (matcher.find()) {
-			// TODO Implementirati
+
+			// Tekst izmedju kolona
+			String konstanta = vrednost.substring(pocetak, matcher.start());
+			pocetak = matcher.end();
+			if (!konstanta.isEmpty()) {
+				formati.add(Format.konstanta(konstanta));
+			}
+
+			// Kolona sa osobinom
+			Poravnanje poravnanje = Poravnanje.pretvoriIzOznaka(matcher.group(1));
+			String s = matcher.group(2);
+			int sirina = 0;
+			if (!"".equals(s)) {
+				try {
+					sirina = Integer.parseInt(s);
+				} catch (NumberFormatException e) {
+					throw Proveri.argument("format", vrednost);
+				}
+			}
+			// TODO Implementirati pojedinacne formate
+
 		}
 
 		// Postavimo format
