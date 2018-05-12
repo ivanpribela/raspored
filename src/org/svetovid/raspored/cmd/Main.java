@@ -201,7 +201,20 @@ public class Main {
 					throw Proveri.argument("format", vrednost);
 				}
 			}
-			// TODO Implementirati pojedinacne formate
+			Function<Cas, String> kolona;
+			switch (matcher.group(3)) {
+				case "s": case "S": kolona = Format.kolona(cas -> cas.getStudenti().toString(), sirina, poravnanje); break;
+				case "d": case "D": kolona = Format.kolona(cas -> cas.getDan().getOznaka(), sirina, poravnanje); break;
+				case "v": case "V": kolona = Format.kolona(cas -> cas.getVremeOd() + "-" + cas.getVremeDo(), sirina, poravnanje); break;
+				case "p": case "P": kolona = Format.kolona(Cas::getPredmet, sirina, poravnanje); break;
+				case "n": case "N": kolona = Format.kolona(Cas::getNastavnik, sirina, poravnanje); break;
+				case "t": case "T": kolona = Format.kolona(cas -> Tip.pretvoriUOznake(cas.getTipovi()), sirina, poravnanje); break;
+				case "l": case "L": kolona = Format.kolona(Cas::getSala, sirina, poravnanje); break;
+				case "i": case "I": kolona = Format.kolona(Cas::getId, sirina, poravnanje); break;
+				case "z": case "Z": kolona = Format.kolona(cas -> cas.getDatumIzmene().toString(), sirina, poravnanje); break;
+				default: throw Proveri.argument("Nepoznata opcija formatiranja", matcher.group(3));
+			}
+			formati.add(kolona);
 
 		}
 
