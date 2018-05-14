@@ -17,7 +17,9 @@
 package org.svetovid.raspored.util;
 
 import java.util.Comparator;
+import java.util.Set;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import org.svetovid.raspored.model.Cas;
 
@@ -26,5 +28,10 @@ public class Komparator {
 	public static Comparator<Cas> string(Function<Cas, String> funkcija) {
 		Proveri.argument(funkcija != null, "funkcija", funkcija);
 		return Comparator.comparing(funkcija, String.CASE_INSENSITIVE_ORDER);
+	}
+
+	public static Comparator<Cas> skupStringova(Function<Cas, Set<String>> funkcija) {
+		Proveri.argument(funkcija != null, "funkcija", funkcija);
+		return Comparator.comparing(funkcija, Comparator.comparing(skup -> skup.stream().sorted().map(Object::toString).collect(Collectors.joining())));
 	}
 }
