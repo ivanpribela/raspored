@@ -16,6 +16,7 @@
 
 package org.svetovid.raspored.util;
 
+import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.Set;
 import java.util.function.Function;
@@ -39,5 +40,10 @@ public class Komparator {
 	public static Comparator<Cas> tipovi(Function<Cas, Set<Tip>> funkcija) {
 		Proveri.argument(funkcija != null, "funkcija", funkcija);
 		return Comparator.comparing(funkcija, Tip::compare);
+	}
+
+	public static Comparator<Cas> datum(Function<Cas, LocalDateTime> funkcija) {
+		Proveri.argument(funkcija != null, "funkcija", funkcija);
+		return Comparator.comparing(funkcija);
 	}
 }
