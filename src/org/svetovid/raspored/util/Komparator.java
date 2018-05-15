@@ -22,6 +22,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import org.svetovid.raspored.model.Cas;
+import org.svetovid.raspored.model.Tip;
 
 public class Komparator {
 
@@ -33,5 +34,10 @@ public class Komparator {
 	public static Comparator<Cas> skupStringova(Function<Cas, Set<String>> funkcija) {
 		Proveri.argument(funkcija != null, "funkcija", funkcija);
 		return Comparator.comparing(funkcija, Comparator.comparing(skup -> skup.stream().sorted().map(Object::toString).collect(Collectors.joining())));
+	}
+
+	public static Comparator<Cas> tipovi(Function<Cas, Set<Tip>> funkcija) {
+		Proveri.argument(funkcija != null, "funkcija", funkcija);
+		return Comparator.comparing(funkcija, Tip::compare);
 	}
 }
