@@ -23,6 +23,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import org.svetovid.raspored.model.Cas;
+import org.svetovid.raspored.model.Termin;
 import org.svetovid.raspored.model.Tip;
 
 public class Komparator {
@@ -45,5 +46,10 @@ public class Komparator {
 	public static Comparator<Cas> datum(Function<Cas, LocalDateTime> funkcija) {
 		Proveri.argument(funkcija != null, "funkcija", funkcija);
 		return Comparator.comparing(funkcija);
+	}
+
+	public static Comparator<Cas> dan(Function<Cas, Termin> funkcija) {
+		Proveri.argument(funkcija != null, "funkcija", funkcija);
+		return Comparator.comparing(funkcija, Comparator.comparing(Termin::getDan));
 	}
 }
