@@ -18,9 +18,11 @@ package org.svetovid.raspored.util;
 
 import java.time.LocalDateTime;
 import java.util.Comparator;
+import java.util.List;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 import org.svetovid.raspored.model.Cas;
 import org.svetovid.raspored.model.Termin;
@@ -51,5 +53,10 @@ public class Komparator {
 	public static Comparator<Cas> dan(Function<Cas, Termin> funkcija) {
 		Proveri.argument(funkcija != null, "funkcija", funkcija);
 		return Comparator.comparing(funkcija, Comparator.comparing(Termin::getDan));
+	}
+
+	public static Comparator<Cas> vreme(Function<Cas, Termin> funkcija) {
+		Proveri.argument(funkcija != null, "funkcija", funkcija);
+		return Comparator.comparing(funkcija, Comparator.comparing(Termin::getVremeOd).thenComparing(Termin::getVremeDo));
 	}
 }
