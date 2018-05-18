@@ -59,4 +59,25 @@ public class Komparator {
 		Proveri.argument(funkcija != null, "funkcija", funkcija);
 		return Comparator.comparing(funkcija, Comparator.comparing(Termin::getVremeOd).thenComparing(Termin::getVremeDo));
 	}
+
+	public static Comparator<Cas> visestruki(Iterable<Comparator<Cas>> komparatori) {
+		Proveri.argument(komparatori != null, "komparatori", komparatori);
+		List<Comparator<Cas>> listaKomparatora = StreamSupport.stream(komparatori.spliterator(), false)
+				.filter(filter -> filter != null)
+				.collect(Collectors.toList());
+		return (Cas cas1, Cas cas2) -> {
+			int i = 1;
+			for (Comparator<Cas> komparator : listaKomparatora) {
+				int rezultat = komparator.compare(cas1, cas2);
+				if (rezultat > 0) {
+					return i;
+				}
+				if (rezultat < 0) {
+					return -i;
+				}
+				i++;
+			}
+			return 0;
+		};
+	}
 }
