@@ -34,6 +34,7 @@ import org.svetovid.raspored.model.Cas;
 import org.svetovid.raspored.model.Tip;
 import org.svetovid.raspored.util.Filter;
 import org.svetovid.raspored.util.Format;
+import org.svetovid.raspored.util.Komparator;
 import org.svetovid.raspored.util.Poravnanje;
 import org.svetovid.raspored.util.Proveri;
 
@@ -224,6 +225,29 @@ public class Main {
 	}
 
 	protected static void redosled(String vrednost, Opcije opcije) throws IllegalArgumentException {
-		// TODO implementirati
+
+		// Provera argumenata
+		Proveri.argument(!vrednost.isEmpty(), "redosled", vrednost);
+
+		// Grupisanje
+		char ch0 = vrednost.charAt(0);
+		if (ch0 >= '0' && ch0 <= '9') {
+			opcije.setGrupisanje(Math.min(ch0 - '0', vrednost.length() - 1));
+			vrednost = vrednost.substring(1);
+		} else {
+			opcije.setGrupisanje(0);
+		}
+
+		// Komparatori
+		List<Comparator<Cas>> komparatori = new ArrayList<>();
+		for (char ch : vrednost.toCharArray()) {
+			Comparator<Cas> komparator = null;
+			// TODO Implementirati opcije za poredjenje
+			komparatori.add(komparator);
+		}
+
+		// Postavimo redosled
+		opcije.setRedosled(Komparator.visestruki(komparatori));
+
 	}
 }
