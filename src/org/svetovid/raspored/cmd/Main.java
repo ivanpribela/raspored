@@ -241,8 +241,19 @@ public class Main {
 		// Komparatori
 		List<Comparator<Cas>> komparatori = new ArrayList<>();
 		for (char ch : vrednost.toCharArray()) {
-			Comparator<Cas> komparator = null;
-			// TODO Implementirati opcije za poredjenje
+			Comparator<Cas> komparator;
+			switch (ch) {
+				case 's': case 'S': komparator = Komparator.skupStringova(Cas::getStudenti); break;
+				case 'd': case 'D': komparator = Komparator.dan(Cas::getTermin); break;
+				case 'v': case 'V': komparator = Komparator.vreme(Cas::getTermin); break;
+				case 'p': case 'P': komparator = Komparator.string(Cas::getPredmet); break;
+				case 'n': case 'N': komparator = Komparator.string(Cas::getNastavnik); break;
+				case 't': case 'T': komparator = Komparator.tipovi(Cas::getTipovi); break;
+				case 'l': case 'L': komparator = Komparator.string(Cas::getSala); break;
+				case 'i': case 'I': komparator = Komparator.string(Cas::getId); break;
+				case 'z': case 'Z': komparator = Komparator.datum(Cas::getDatumIzmene); break;
+				default: throw Proveri.argument("redosled", ch);
+			}
 			komparatori.add(komparator);
 		}
 
