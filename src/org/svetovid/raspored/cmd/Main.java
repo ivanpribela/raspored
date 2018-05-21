@@ -254,6 +254,9 @@ public class Main {
 				case 'z': case 'Z': komparator = Komparator.datum(Cas::getDatumIzmene); break;
 				default: throw Proveri.argument("redosled", ch);
 			}
+			if (Character.isUpperCase(ch)) {
+				komparator = komparator.reversed();
+			}
 			komparatori.add(komparator);
 		}
 
