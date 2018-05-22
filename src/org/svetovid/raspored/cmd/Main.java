@@ -49,10 +49,16 @@ public class Main {
 			String vrednost = arguments[2 * i + 1];
 			argument(i, naziv, vrednost, opcije);
 		}
+		if (opcije.getRedosled() == null) {
+			redosled("1dvpni", opcije);
+		}
+		if (opcije.getFormat() == null) {
+			format("%+10s | %d %v | %+50p %+7t %+30n %+15l", opcije);
+		}
 
 		// Parsiranje kalendara
 		Parser parser = new Parser();
-		List<Cas> casovi = parser.parsiraj(arguments[0], Paths.get(arguments[1]));
+		List<Cas> casovi = parser.parsiraj("Smer", opcije.getPutanja()); // FIXME Popraviti kasnije da se uzima ime fajla
 		Collections.sort(casovi, (cas1, cas2) -> cas1.getTermin().compareTo(cas2.getTermin()));
 
 		// Obrada rasporeda
