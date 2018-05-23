@@ -38,9 +38,9 @@ public abstract class Filter {
 		Proveri.argument(izraz != null, "izraz", izraz);
 		Proveri.argument(funkcija != null, "funkcija", funkcija);
 		if (izraz.startsWith("=")) {
-			return stringJednak(izraz.substring(1), funkcija); 
+			return stringJednak(izraz.substring(1), funkcija);
 		} else {
-			return stringSadrzi(izraz, funkcija); 
+			return stringSadrzi(izraz, funkcija);
 		}
 	}
 
@@ -72,9 +72,9 @@ public abstract class Filter {
 		Proveri.argument(izraz != null, "izraz", izraz);
 		Proveri.argument(funkcija != null, "funkcija", funkcija);
 		if (izraz.startsWith("=")) {
-			return skupStringovaJednak(izraz.substring(1), funkcija); 
+			return skupStringovaJednak(izraz.substring(1), funkcija);
 		} else {
-			return skupStringSadrzi(izraz, funkcija); 
+			return skupStringSadrzi(izraz, funkcija);
 		}
 	}
 
@@ -133,9 +133,9 @@ public abstract class Filter {
 		}
 		LocalDateTime granica = LocalDateTime.now().minus(kolicina, jedinica);
 		if (izraz.startsWith("<")) {
-			return datumPosle(granica, funkcija); 
+			return datumPosle(granica, funkcija);
 		} else {
-			return datumPre(granica, funkcija); 
+			return datumPre(granica, funkcija);
 		}
 	}
 

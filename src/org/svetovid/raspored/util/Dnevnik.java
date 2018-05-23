@@ -158,7 +158,7 @@ public class Dnevnik {
 				fileHandler.setLevel(Level.ALL);
 				logger.addHandler(fileHandler);
 			} catch (IOException e) {
-				greska("Nije moguce upisivati dnevnik u fajl \"%s\"", e, fajl); 
+				greska("Nije moguce upisivati dnevnik u fajl \"%s\"", e, fajl);
 			}
 		}
 
