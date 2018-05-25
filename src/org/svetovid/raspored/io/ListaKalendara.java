@@ -16,11 +16,14 @@
 
 package org.svetovid.raspored.io;
 
+import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
+import org.svetovid.raspored.util.Dnevnik;
 import org.svetovid.raspored.util.Proveri;
 
 /**
@@ -38,6 +41,7 @@ public final class ListaKalendara {
 	public ListaKalendara(Path folder) {
 		Proveri.argument(folder != null, "folder", folder);
 		this.folder = folder;
+		napraviFolderAkoNePostoji(folder);
 		kalendari = new ArrayList<>();
 	}
 
@@ -47,5 +51,15 @@ public final class ListaKalendara {
 
 	public Stream<Kalendar> kalendari() {
 		return kalendari.stream();
+	}
+
+	private boolean napraviFolderAkoNePostoji(Path folder) {
+		try {
+			Files.createDirectories(folder);
+			return true;
+		} catch (IOException e) {
+			Dnevnik.upozorenje("Nije moguće napraviti folder za kalendare: \"%s\"", e, folder);
+			return false;
+		}
 	}
 }
