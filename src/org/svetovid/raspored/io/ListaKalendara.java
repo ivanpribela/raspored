@@ -16,11 +16,17 @@
 
 package org.svetovid.raspored.io;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
 import org.svetovid.raspored.util.Dnevnik;
@@ -42,7 +48,7 @@ public final class ListaKalendara {
 		Proveri.argument(folder != null, "folder", folder);
 		this.folder = folder;
 		napraviFolderAkoNePostoji(folder);
-		kalendari = new ArrayList<>();
+		kalendari = ucitajListuKalendara();
 	}
 
 	public Path getFolder() {
@@ -60,6 +66,36 @@ public final class ListaKalendara {
 		} catch (IOException e) {
 			Dnevnik.upozorenje("Nije moguće napraviti folder za kalendare: \"%s\"", e, folder);
 			return false;
+		}
+	}
+
+	private static final Pattern pattern = Pattern.compile("(?<ime>.+)\\s+(?<url>.+)");
+
+	protected List<Kalendar> ucitajListuKalendara() {
+		List<Kalendar> kalendari = new ArrayList<>();
+		try (BufferedReader in = new BufferedReader(new InputStreamReader(Files.newInputStream(folder.resolve("kalendari.txt")), "UTF-8"))) {
+			String linija = in.readLine();
+			while (linija != null) {
+				Matcher matcher = pattern.matcher(linija);
+				if (matcher.matches()) {
+					dodajKalendar(kalendari, matcher.group("ime"), matcher.group("url"));
+				} else {
+					Dnevnik.upozorenje("Greška pri učitavanju kalendara u liniji " + linija);
+				}
+				linija = in.readLine();
+			}
+		} catch (IOException e) {
+			Dnevnik.upozorenje("Greška pri učitavanju liste kalendara", e);
+		}
+		return kalendari;
+	}
+
+	private void dodajKalendar(List<Kalendar> kalendari, String ime, String url) {
+		try {
+			Kalendar kalendar = new Kalendar(ime, new URL(url));
+			kalendari.add(kalendar);
+		} catch (MalformedURLException e) {
+			Dnevnik.upozorenje("Loša adresa do kalendara: \"%s\"", e, url);
 		}
 	}
 }
