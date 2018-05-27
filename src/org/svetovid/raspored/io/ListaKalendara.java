@@ -69,6 +69,17 @@ public final class ListaKalendara {
 		}
 	}
 
+	public void preuzmi() {
+		napraviFolderAkoNePostoji(folder);
+		for (Kalendar kalendar : kalendari) {
+			try {
+				kalendar.preuzmi(folder);
+			} catch (IOException e) {
+				// Nista, poruka o gresci je vec zapisana
+			}
+		}
+	}
+
 	private static final Pattern pattern = Pattern.compile("(?<ime>.+)\\s+(?<url>.+)");
 
 	protected List<Kalendar> ucitajListuKalendara() {
