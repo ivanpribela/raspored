@@ -29,6 +29,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
+import org.svetovid.raspored.model.Cas;
 import org.svetovid.raspored.util.Dnevnik;
 import org.svetovid.raspored.util.Proveri;
 
@@ -78,6 +79,18 @@ public final class ListaKalendara {
 				// Nista, poruka o gresci je vec zapisana
 			}
 		}
+	}
+
+	public List<Cas> parsiraj(Parser parser) {
+		List<Cas> casovi = new ArrayList<>();
+		for (Kalendar kalendar : kalendari) {
+			try {
+				casovi.addAll(kalendar.parsiraj(folder, parser));
+			} catch (IOException e) {
+				// Nista, poruka o gresci je vec zapisana
+			}
+		}
+		return casovi;
 	}
 
 	private static final Pattern pattern = Pattern.compile("(?<ime>.+)\\s+(?<url>.+)");
