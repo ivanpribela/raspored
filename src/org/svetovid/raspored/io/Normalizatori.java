@@ -16,8 +16,11 @@
 
 package org.svetovid.raspored.io;
 
+import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 
+import org.svetovid.raspored.util.Dnevnik;
 import org.svetovid.raspored.util.Proveri;
 
 /**
@@ -33,9 +36,20 @@ public final class Normalizatori {
 	public Normalizatori(Path folder) {
 		Proveri.argument(folder != null, "folder", folder);
 		this.folder = folder;
+		napraviFolderAkoNePostoji(folder);
 	}
 
 	public Path getFolder() {
 		return folder;
+	}
+
+	private boolean napraviFolderAkoNePostoji(Path folder) {
+		try {
+			Files.createDirectories(folder);
+			return true;
+		} catch (IOException e) {
+			Dnevnik.upozorenje("Nije moguće napraviti folder za normalizatore: \"%s\"", e, folder);
+			return false;
+		}
 	}
 }
