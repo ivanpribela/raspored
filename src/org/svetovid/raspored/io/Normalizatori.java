@@ -31,12 +31,30 @@ import org.svetovid.raspored.util.Proveri;
  */
 public final class Normalizatori {
 
+	private final Normalizator normalizatorSmerova;
+	private final Normalizator normalizatorPredmeta;
+	private final Normalizator normalizatorNastavnika;
+	private final Normalizator normalizatorSala;
+
 	private final Path folder;
+
+	private final Path putanjaZaSmerove;
+	private final Path putanjaZaPredmete;
+	private final Path putanjaZaNastavnike;
+	private final Path putanjaZaSale;
 
 	public Normalizatori(Path folder) {
 		Proveri.argument(folder != null, "folder", folder);
 		this.folder = folder;
 		napraviFolderAkoNePostoji(folder);
+		putanjaZaSmerove = folder.resolve("Smerovi.txt");
+		putanjaZaPredmete = folder.resolve("Predmeti.txt");
+		putanjaZaNastavnike = folder.resolve("Nastavnici.txt");
+		putanjaZaSale = folder.resolve("Sale.txt");
+		normalizatorSmerova = init("Smer", putanjaZaSmerove);
+		normalizatorPredmeta = init("Predmet", putanjaZaPredmete);
+		normalizatorNastavnika = init("Nastavnik", putanjaZaNastavnike);
+		normalizatorSala = init("Sala", putanjaZaSale);
 	}
 
 	public Path getFolder() {
@@ -51,5 +69,16 @@ public final class Normalizatori {
 			Dnevnik.upozorenje("Nije moguće napraviti folder za normalizatore: \"%s\"", e, folder);
 			return false;
 		}
+	}
+
+	protected Normalizator init(String ime, Path putanja) {
+		Normalizator normalizator = new Normalizator(ime);
+		try {
+			normalizator.ucitaj(putanja);
+			normalizator.sacuvaj(putanja);
+		} catch (IOException e) {
+			// Nista, poruka o gresci je vec zapisana
+		}
+		return normalizator;
 	}
 }
