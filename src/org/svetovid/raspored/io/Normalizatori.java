@@ -19,7 +19,10 @@ package org.svetovid.raspored.io;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.HashSet;
+import java.util.Set;
 
+import org.svetovid.raspored.model.Cas;
 import org.svetovid.raspored.util.Dnevnik;
 import org.svetovid.raspored.util.Proveri;
 
@@ -80,5 +83,21 @@ public final class Normalizatori {
 			// Nista, poruka o gresci je vec zapisana
 		}
 		return normalizator;
+	}
+
+	public Cas normalizuj(Cas cas) {
+		Proveri.argument(cas != null, "cas", cas);
+		Dnevnik.trag("Normalizacija časa %s", cas.getId());
+		Set<String> normalizovaniStudenti = new HashSet<>();
+		for (String smer : cas.getStudenti()) {
+			normalizovaniStudenti.add(normalizatorSmerova.normalizuj(smer));
+		}
+		String predmet = cas.getPredmet();
+		String normalizovaniPredmet = normalizatorPredmeta.normalizuj(predmet);
+		String nastavnik = cas.getNastavnik();
+		String normalizovaniNastavnik = normalizatorNastavnika.normalizuj(nastavnik);
+		String sala = cas.getSala();
+		String normalizovanaSala = normalizatorSala.normalizuj(sala);
+		return new Cas(normalizovaniStudenti, cas.getTermin(), normalizovaniPredmet, normalizovaniNastavnik, cas.getTipovi(), normalizovanaSala, cas.getId(), cas.getDatumIzmene());
 	}
 }
