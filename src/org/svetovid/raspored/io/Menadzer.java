@@ -18,6 +18,7 @@ package org.svetovid.raspored.io;
 
 import java.nio.file.Path;
 
+import org.svetovid.raspored.model.Raspored;
 import org.svetovid.raspored.util.Dnevnik;
 import org.svetovid.raspored.util.Proveri;
 
@@ -31,5 +32,15 @@ public class Menadzer {
 		Dnevnik.podesi(folder.resolve("Dnevnik"));
 		kalendari = new ListaKalendara(folder.resolve("Kalendari"));
 		normalizatori = new Normalizatori(folder.resolve("Normalizatori"));
+	}
+
+	public Raspored getRaspored() {
+		Raspored raspored = new Raspored();
+		kalendari.preuzmi();
+		Parser parser = new Parser();
+		kalendari.parsiraj(parser).stream()
+				.map(normalizatori::normalizuj)
+				.forEach(raspored::dodaj);
+		return raspored;
 	}
 }
