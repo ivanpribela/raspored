@@ -83,14 +83,14 @@ public final class Parser {
 
 	public List<Cas> parsiraj(String naziv, Path putanja) throws IOException {
 		Proveri.argument(putanja != null, "putanja", putanja);
-		try (BufferedReader in = new BufferedReader(new InputStreamReader(Files.newInputStream(putanja)))) {
+		try (BufferedReader in = new BufferedReader(new InputStreamReader(Files.newInputStream(putanja), "UTF-8"))) {
 			return parsiraj(naziv, in);
 		}
 	}
 
 	public List<Cas> parsiraj(String naziv, URL url) throws IOException {
 		Proveri.argument(url != null, "url", url);
-		try (BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()))) {
+		try (BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream(), "UTF-8"))) {
 			return parsiraj(naziv, in);
 		}
 	}

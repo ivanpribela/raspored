@@ -107,7 +107,7 @@ public final class Normalizator {
 	public void ucitaj(Path putanja) throws IOException {
 		Proveri.argument(putanja != null, "putanja", putanja);
 		Dnevnik.trag("Učitavanje pravila za normalizator osobine \"%s\"", ime);
-		try (BufferedReader in = new BufferedReader(new InputStreamReader(Files.newInputStream(putanja)))) {
+		try (BufferedReader in = new BufferedReader(new InputStreamReader(Files.newInputStream(putanja), "UTF-8"))) {
 			ucitaj(in);
 			Dnevnik.info("Normalizator osobine \"%s\" je spreman sa %d pravila", ime, pravila.size());
 		} catch (IOException e) {
@@ -119,7 +119,7 @@ public final class Normalizator {
 	public void ucitaj(URL url) throws IOException {
 		Proveri.argument(url != null, "url", url);
 		Dnevnik.trag("Učitavanje pravila za normalizator osobine \"%s\"", ime);
-		try (BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()))) {
+		try (BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream(), "UTF-8"))) {
 			ucitaj(in);
 			Dnevnik.info("Normalizator osobine \"%s\" je spreman sa %d pravila", ime, pravila.size());
 		} catch (IOException e) {
@@ -177,7 +177,7 @@ public final class Normalizator {
 
 	public void sacuvaj(Path putanja) throws IOException {
 		Proveri.argument(putanja != null, "putanja", putanja);
-		try (BufferedWriter out = new BufferedWriter(new OutputStreamWriter(Files.newOutputStream(putanja)))) {
+		try (BufferedWriter out = new BufferedWriter(new OutputStreamWriter(Files.newOutputStream(putanja), "UTF-8"))) {
 			sacuvaj(out);
 		}
 	}
