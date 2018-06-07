@@ -27,6 +27,7 @@ import java.util.List;
 
 import org.svetovid.raspored.model.Cas;
 import org.svetovid.raspored.util.Dnevnik;
+import org.svetovid.raspored.util.Odluka;
 import org.svetovid.raspored.util.Proveri;
 
 /**
@@ -59,9 +60,14 @@ public final class Kalendar {
 		return putanja;
 	}
 
-	public void preuzmi(Path folder) throws IOException {
+	public void preuzmi(Path folder, Odluka preuzimanje) throws IOException {
 		Proveri.argument(folder != null, "folder", folder);
 		Path fajl = folder.resolve(putanja);
+		boolean preuzmi = preuzimanje.odluci(Files.notExists(fajl));
+		if (!preuzmi) {
+			Dnevnik.trag("Nije potrebno preuzimanje kalendara \"%s\" u fajl \"%s\" sa adrese \"%s\"", ime, fajl, url);
+			return;
+		}
 		Dnevnik.trag("Preuzimanje kalendara \"%s\" u fajl \"%s\" sa adrese \"%s\"", ime, fajl, url);
 		try {
 			try (InputStream in = url.openStream()) {
@@ -69,7 +75,7 @@ public final class Kalendar {
 			}
 			Dnevnik.info("Kalendar \"%s\" je preuzet", ime);
 		} catch (IOException e) {
-			Dnevnik.upozorenje("Kalendar \"%s\" nije je preuzet", e, ime);
+			Dnevnik.upozorenje("Kalendar \"%s\" nije preuzet", e, ime);
 			throw e;
 		}
 	}
