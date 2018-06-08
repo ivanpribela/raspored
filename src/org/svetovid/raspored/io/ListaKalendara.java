@@ -31,6 +31,7 @@ import java.util.stream.Stream;
 
 import org.svetovid.raspored.model.Cas;
 import org.svetovid.raspored.util.Dnevnik;
+import org.svetovid.raspored.util.Odluka;
 import org.svetovid.raspored.util.Proveri;
 
 /**
@@ -70,11 +71,11 @@ public final class ListaKalendara {
 		}
 	}
 
-	public void preuzmi() {
+	public void preuzmi(Odluka preuzimanje) {
 		napraviFolderAkoNePostoji(folder);
 		for (Kalendar kalendar : kalendari) {
 			try {
-				kalendar.preuzmi(folder);
+				kalendar.preuzmi(folder, preuzimanje);
 			} catch (IOException e) {
 				// Nista, poruka o gresci je vec zapisana
 			}
