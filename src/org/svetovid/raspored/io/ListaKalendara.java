@@ -42,7 +42,7 @@ import org.svetovid.raspored.util.Proveri;
  */
 public final class ListaKalendara {
 
-	private final List<Kalendar> kalendari;
+	private final List<Kalendar> kalendari = new ArrayList<>();
 
 	private final Path folder;
 
@@ -50,7 +50,12 @@ public final class ListaKalendara {
 		Proveri.argument(folder != null, "folder", folder);
 		this.folder = folder;
 		napraviFolderAkoNePostoji(folder);
-		kalendari = ucitajListuKalendara();
+		Path putanja = folder.resolve("Kalendari.txt");
+		try {
+			kalendari.addAll(ucitaj(putanja));
+		} catch (IOException e) {
+			// Nista, poruka o gresci je vec zapisana
+		}
 	}
 
 	public Path getFolder() {
@@ -94,34 +99,52 @@ public final class ListaKalendara {
 		return casovi;
 	}
 
+	public List<Kalendar> ucitaj(Path putanja) throws IOException {
+		Proveri.argument(putanja != null, "putanja", putanja);
+		Dnevnik.trag("Učitavanje liste kalendara");
+		try (BufferedReader in = new BufferedReader(new InputStreamReader(Files.newInputStream(putanja), "UTF-8"))) {
+			List<Kalendar> kalendari = ucitaj(in);
+			Dnevnik.info("Lista je učitana sa %d kalendara", kalendari.size());
+			return kalendari;
+		} catch (IOException e) {
+			Dnevnik.info("Lista nije učitana", e);
+			throw e;
+		}
+	}
+
+	public List<Kalendar> ucitaj(URL url) throws IOException {
+		Proveri.argument(url != null, "url", url);
+		Dnevnik.trag("Učitavanje liste kalendara");
+		try (BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream(), "UTF-8"))) {
+			List<Kalendar> kalendari = ucitaj(in);
+			Dnevnik.info("Lista je učitana sa %d kalendara", kalendari.size());
+			return kalendari;
+		} catch (IOException e) {
+			Dnevnik.info("Lista nije učitana", e);
+			throw e;
+		}
+	}
+
 	private static final Pattern pattern = Pattern.compile("(?<ime>.+)\\s+(?<url>.+)");
 
-	protected List<Kalendar> ucitajListuKalendara() {
+	protected List<Kalendar> ucitaj(BufferedReader in) throws IOException {
+		Proveri.argument(in != null, "in", in);
 		List<Kalendar> kalendari = new ArrayList<>();
-		try (BufferedReader in = new BufferedReader(new InputStreamReader(Files.newInputStream(folder.resolve("kalendari.txt")), "UTF-8"))) {
+		try {
 			String linija = in.readLine();
+			int brLinije = 1;
 			while (linija != null) {
 				Matcher matcher = pattern.matcher(linija);
 				if (matcher.matches()) {
 					dodajKalendar(kalendari, matcher.group("ime"), matcher.group("url"));
 				} else {
-					Dnevnik.upozorenje("Greška pri učitavanju kalendara u liniji " + linija);
+					Dnevnik.trag3("Linija %3d nije dobro formatirana: %s", brLinije, linija);
 				}
 				linija = in.readLine();
+				brLinije++;
 			}
 		} catch (IOException e) {
-			Dnevnik.upozorenje("Greška pri učitavanju liste kalendara", e);
-		}
-		if (kalendari.isEmpty()) {
-			Dnevnik.upozorenje("Koriste se podrazumevani kalendari");
-			dodajKalendar(kalendari, "1IT", "https://calendar.google.com/calendar/ical/g3khre7jrsih1idp5b5ahgm1f8%40group.calendar.google.com/public/basic.ics");
-			dodajKalendar(kalendari, "1RN", "https://calendar.google.com/calendar/ical/dkkfm5u41nijcqnfcpai4tvko4%40group.calendar.google.com/public/basic.ics");
-			dodajKalendar(kalendari, "2IT", "https://calendar.google.com/calendar/ical/hu93vkklcv692mikqvm17scnv4%40group.calendar.google.com/public/basic.ics");
-			dodajKalendar(kalendari, "2RN", "https://calendar.google.com/calendar/ical/4m68kac06oau937i0kfsglv4vo%40group.calendar.google.com/public/basic.ics");
-			dodajKalendar(kalendari, "3IT", "https://calendar.google.com/calendar/ical/6ovsf0fqb19q10s271b9e59ttc%40group.calendar.google.com/public/basic.ics");
-			dodajKalendar(kalendari, "3RN", "https://calendar.google.com/calendar/ical/0rm1s1krr0e83m5dn7jfdjtbg8%40group.calendar.google.com/public/basic.ics");
-			dodajKalendar(kalendari, "4",   "https://calendar.google.com/calendar/ical/a730slcmbr9c6dii94j9pbdir4%40group.calendar.google.com/public/basic.ics");
-			dodajKalendar(kalendari, "M",   "https://calendar.google.com/calendar/ical/slmamsigaoclkjvvroj1t280v8%40group.calendar.google.com/public/basic.ics");
+			Dnevnik.upozorenje("Greška prilikom učitavanja liste kalendara", e);
 		}
 		return kalendari;
 	}
