@@ -18,11 +18,13 @@ package org.svetovid.raspored.io;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -46,11 +48,16 @@ public final class ListaKalendara {
 
 	private final Path folder;
 
-	public ListaKalendara(Path folder) {
+	public ListaKalendara(Path folder, Odluka inicijalizacija) {
 		Proveri.argument(folder != null, "folder", folder);
 		this.folder = folder;
 		napraviFolderAkoNePostoji(folder);
 		Path putanja = folder.resolve("Kalendari.txt");
+		try {
+			inicijalizuj(putanja, "/Kalendari.txt", inicijalizacija);
+		} catch (IOException e) {
+			// Nista, poruka o gresci je vec zapisana
+		}
 		try {
 			kalendari.addAll(ucitaj(putanja));
 		} catch (IOException e) {
@@ -97,6 +104,31 @@ public final class ListaKalendara {
 			}
 		}
 		return casovi;
+	}
+
+	public void inicijalizuj(Path putanja, String resurs, Odluka inicijalizacija) throws IOException {
+		Proveri.argument(putanja != null, "putanja", putanja);
+		Proveri.argument(resurs != null, "resurs", resurs);
+		Proveri.argument(inicijalizacija != null, "inicijalizacija", inicijalizacija);
+		URL url = this.getClass().getResource(resurs);
+		boolean inicijalizuj = inicijalizacija.odluci(Files.notExists(putanja));
+		if (!inicijalizuj) {
+			Dnevnik.trag("Nije potrebna inicijalizacija liste kalendara u fajl \"%s\" sa adrese \"%s\"", putanja, url);
+			return;
+		}
+		Dnevnik.trag("Inicijalizacija liste kalendara u fajl \"%s\" sa adrese \"%s\"", putanja, url);
+		try {
+			try (InputStream in = url.openStream()) {
+				Files.copy(in, putanja, StandardCopyOption.REPLACE_EXISTING);
+			}
+			Dnevnik.info("Lista kalendara je inicijalizovana");
+		} catch (NullPointerException e) {
+			Dnevnik.upozorenje("Lista kalendara nije inicijalizovana", e);
+			throw new IOException(e);
+		} catch (IOException e) {
+			Dnevnik.upozorenje("Lista kalendara nije inicijalizovana", e);
+			throw e;
+		}
 	}
 
 	public List<Kalendar> ucitaj(Path putanja) throws IOException {
