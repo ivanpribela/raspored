@@ -19,11 +19,13 @@ package org.svetovid.raspored.io;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -31,6 +33,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.svetovid.raspored.util.Dnevnik;
+import org.svetovid.raspored.util.Odluka;
 import org.svetovid.raspored.util.Proveri;
 
 /**
@@ -102,6 +105,30 @@ public final class Normalizator {
 			Dnevnik.trag2("Normalizovano: \"%s\" -> \"%s\"", original, string);
 		}
 		return string;
+	}
+
+	public void inicijalizuj(String resurs, Path putanja, Odluka inicijalizacija) throws IOException {
+		Proveri.argument(resurs != null, "resurs", resurs);
+		Proveri.argument(putanja != null, "putanja", putanja);
+		URL url = this.getClass().getResource(resurs);
+		boolean inicijalizuj = inicijalizacija.odluci(Files.notExists(putanja));
+		if (!inicijalizuj) {
+			Dnevnik.trag("Nije potrebna inicijalizacija normalizatora \"%s\" u fajl \"%s\" sa adrese \"%s\"", ime, putanja, url);
+			return;
+		}
+		Dnevnik.trag("Inicijalizacija normalizatora \"%s\" u fajl \"%s\" sa adrese \"%s\\", ime, putanja, url);
+		try {
+			try (InputStream in = url.openStream()) {
+				Files.copy(in, putanja, StandardCopyOption.REPLACE_EXISTING);
+			}
+			Dnevnik.info("Normalizator \"%s\" je inicijalizovan", ime);
+		} catch (NullPointerException e) {
+			Dnevnik.upozorenje("Normalizator \"%s\" nije inicijalizovan", e, ime);
+			throw new IOException(e);
+		} catch (IOException e) {
+			Dnevnik.upozorenje("Normalizator \"%s\" nije inicijalizovan", e, ime);
+			throw e;
+		}
 	}
 
 	public void ucitaj(Path putanja) throws IOException {
