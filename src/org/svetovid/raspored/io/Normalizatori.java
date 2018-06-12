@@ -24,6 +24,7 @@ import java.util.Set;
 
 import org.svetovid.raspored.model.Cas;
 import org.svetovid.raspored.util.Dnevnik;
+import org.svetovid.raspored.util.Odluka;
 import org.svetovid.raspored.util.Proveri;
 
 /**
@@ -46,7 +47,7 @@ public final class Normalizatori {
 	private final Path putanjaZaNastavnike;
 	private final Path putanjaZaSale;
 
-	public Normalizatori(Path folder) {
+	public Normalizatori(Path folder, Odluka inicijalizacija) {
 		Proveri.argument(folder != null, "folder", folder);
 		this.folder = folder;
 		napraviFolderAkoNePostoji(folder);
@@ -54,10 +55,10 @@ public final class Normalizatori {
 		putanjaZaPredmete = folder.resolve("Predmeti.txt");
 		putanjaZaNastavnike = folder.resolve("Nastavnici.txt");
 		putanjaZaSale = folder.resolve("Sale.txt");
-		normalizatorSmerova = init("Smer", putanjaZaSmerove);
-		normalizatorPredmeta = init("Predmet", putanjaZaPredmete);
-		normalizatorNastavnika = init("Nastavnik", putanjaZaNastavnike);
-		normalizatorSala = init("Sala", putanjaZaSale);
+		normalizatorSmerova = inicijalizuj("Smer", putanjaZaSmerove, "/Smerovi.txt", inicijalizacija);
+		normalizatorPredmeta = inicijalizuj("Predmet", putanjaZaPredmete, "/Predmeti.txt", inicijalizacija);
+		normalizatorNastavnika = inicijalizuj("Nastavnik", putanjaZaNastavnike, "/Nastavnici.txt", inicijalizacija);
+		normalizatorSala = inicijalizuj("Sala", putanjaZaSale, "/Sale.txt", inicijalizacija);
 	}
 
 	public Path getFolder() {
@@ -74,11 +75,19 @@ public final class Normalizatori {
 		}
 	}
 
-	protected Normalizator init(String ime, Path putanja) {
+	protected Normalizator inicijalizuj(String ime, Path putanja, String resurs, Odluka inicijalizacija) {
+		Proveri.argument(ime != null, "ime", ime);
+		Proveri.argument(putanja != null, "putanja", putanja);
+		Proveri.argument(resurs != null, "resurs", resurs);
+		Proveri.argument(inicijalizacija != null, "inicijalizacija", inicijalizacija);
 		Normalizator normalizator = new Normalizator(ime);
 		try {
+			normalizator.inicijalizuj(resurs, putanja, inicijalizacija);
+		} catch (IOException e) {
+			// Nista, poruka o gresci je vec zapisana
+		}
+		try {
 			normalizator.ucitaj(putanja);
-			normalizator.sacuvaj(putanja);
 		} catch (IOException e) {
 			// Nista, poruka o gresci je vec zapisana
 		}
