@@ -28,11 +28,14 @@ import java.util.stream.Collectors;
 
 import org.svetovid.raspored.model.Cas;
 import org.svetovid.raspored.util.Filter;
+import org.svetovid.raspored.util.Odluka;
 
 public class Opcije {
 
 	public Opcije() {
 		putanja = null;
+		inicijalizacija = Odluka.PO_POTREBI;
+		preuzimanje = Odluka.PO_POTREBI;
 		redosled = null;
 		grupisanje = 0;
 		format = null;
@@ -44,6 +47,8 @@ public class Opcije {
 	////////////
 
 	protected Path putanja;
+	protected Odluka inicijalizacija;
+	protected Odluka preuzimanje;
 
 	public Path getPutanja() {
 		return putanja;
@@ -51,6 +56,22 @@ public class Opcije {
 
 	public void setPutanja(Path putanja) {
 		this.putanja = putanja;
+	}
+
+	public Odluka getInicijalizacija() {
+		return inicijalizacija;
+	}
+
+	public void setInicijalizacija(Odluka inicijalizacija) {
+		this.inicijalizacija = inicijalizacija;
+	}
+
+	public Odluka getPreuzimanje() {
+		return preuzimanje;
+	}
+
+	public void setPreuzimanje(Odluka preuzimanje) {
+		this.preuzimanje = preuzimanje;
 	}
 
 	// TODO Dodati cuvanje ostalih standardnih opcija
