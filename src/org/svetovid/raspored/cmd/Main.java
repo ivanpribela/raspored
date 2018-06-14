@@ -36,6 +36,7 @@ import org.svetovid.raspored.model.Tip;
 import org.svetovid.raspored.util.Filter;
 import org.svetovid.raspored.util.Format;
 import org.svetovid.raspored.util.Komparator;
+import org.svetovid.raspored.util.Odluka;
 import org.svetovid.raspored.util.Poravnanje;
 import org.svetovid.raspored.util.Proveri;
 
@@ -59,7 +60,9 @@ public class Main {
 
 		// Parsiranje kalendara
 		Path putanja = opcije.getPutanja();
-		Menadzer menadzer = new Menadzer(putanja);
+		Odluka inicijalizacija = opcije.getInicijalizacija();
+		Odluka preuzimanje = opcije.getPreuzimanje();
+		Menadzer menadzer = new Menadzer(putanja, inicijalizacija, preuzimanje);
 		Raspored raspored = menadzer.getRaspored();
 
 		// Obrada rasporeda
