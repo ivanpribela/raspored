@@ -105,9 +105,22 @@ public class Main {
 				}
 				break;
 
-			// "uvek" "nikad" "kadfali"
+			// "nikad" "po-potrebi" "uvek"
+			case "--inicijalizuj":
+				try {
+					opcije.setInicijalizacija(Odluka.pretvoriIzOznaka(vrednost));
+				} catch (IllegalArgumentException e) {
+					throw Proveri.argument("Oznaka inicijalizacije nije dobra", vrednost, e);
+				}
+				break;
+
+			// "nikad" "po-potrebi" "uvek"
 			case "--preuzmi":
-				// TODO
+				try {
+					opcije.setPreuzimanje(Odluka.pretvoriIzOznaka(vrednost));
+				} catch (IllegalArgumentException e) {
+					throw Proveri.argument("Oznaka preuzimanja nije dobra", vrednost, e);
+				}
 				break;
 
 			///////////
