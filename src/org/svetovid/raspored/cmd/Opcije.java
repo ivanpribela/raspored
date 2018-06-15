@@ -17,6 +17,7 @@
 package org.svetovid.raspored.cmd;
 
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.LinkedHashMap;
@@ -33,7 +34,7 @@ import org.svetovid.raspored.util.Odluka;
 public class Opcije {
 
 	public Opcije() {
-		putanja = null;
+		putanja = Paths.get(System.getProperty("user.home")).resolve(".raspored");
 		inicijalizacija = Odluka.PO_POTREBI;
 		preuzimanje = Odluka.PO_POTREBI;
 		redosled = null;
