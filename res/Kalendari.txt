@@ -1,0 +1,8 @@
+1IT	https://calendar.google.com/calendar/ical/g3khre7jrsih1idp5b5ahgm1f8%40group.calendar.google.com/public/basic.ics
+1RN	https://calendar.google.com/calendar/ical/dkkfm5u41nijcqnfcpai4tvko4%40group.calendar.google.com/public/basic.ics
+2IT	https://calendar.google.com/calendar/ical/hu93vkklcv692mikqvm17scnv4%40group.calendar.google.com/public/basic.ics
+2RN	https://calendar.google.com/calendar/ical/4m68kac06oau937i0kfsglv4vo%40group.calendar.google.com/public/basic.ics
+3IT	https://calendar.google.com/calendar/ical/6ovsf0fqb19q10s271b9e59ttc%40group.calendar.google.com/public/basic.ics
+3RN	https://calendar.google.com/calendar/ical/0rm1s1krr0e83m5dn7jfdjtbg8%40group.calendar.google.com/public/basic.ics
+4	https://calendar.google.com/calendar/ical/a730slcmbr9c6dii94j9pbdir4%40group.calendar.google.com/public/basic.ics
+M	https://calendar.google.com/calendar/ical/slmamsigaoclkjvvroj1t280v8%40group.calendar.google.com/public/basic.ics
