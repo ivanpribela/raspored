@@ -1,0 +1,36 @@
+
+R	godina
+ 	 godina 
+
+R	-
+ 	 - 
+
+R	\\s+
+ 	 
+
+R	\\s$
+ 	
+
+S	1IT
+ 	1-IT
+
+S	1RN
+ 	1-RN
+
+S	2IT
+ 	2-IT
+
+S	2RN
+ 	2-RN
+
+S	3IT
+ 	3-IT
+
+S	3RN
+ 	3-RN
+
+S	4
+ 	4-IT+RN
+
+S	M
+ 	Master
