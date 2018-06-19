@@ -1,0 +1,126 @@
+
+R	\.\s*
+ 	. 
+
+R	\s+-\s+
+ 	-
+
+R	dizajn i obrasci\\, 
+ 	
+
+S	A. Klašnja-Milićević
+ 	Aleksandra Klašnja-Milićević
+
+S	B. Bratić
+ 	Brankica Bratić
+
+S	D. Boberić-Krstićev
+ 	Danijela Boberić-Krstićev
+
+S	D. Mašulović
+ 	Dragan Mašulović
+
+S	D. Pracner
+ 	Doni Pracner
+
+S	D. Radaković
+ 	Davorka Radaković
+
+S	D. Tešendić
+ 	Danijela Tešendić
+
+S	G. Rakić
+ 	Gordana Rakić
+
+S	I. Bošnjak
+ 	Ivica Bošnjak
+
+S	I. Pribela
+ 	Ivan Pribela
+
+S	I. Štajner Papuga
+ 	Ivana Štajner Papuga
+
+S	J. Vidaković
+ 	Jovana Vidaković
+
+S	L. Fodor
+ 	Lidija Fodor
+
+S	M. Ivanović
+ 	Mirjana Ivanović
+
+S	M. Jović
+ 	Milan Jović
+
+S	M. Pech
+ 	Maja Pech
+
+S	M. Racković
+ 	Miloš Racković
+
+S	M. Radovanović
+ 	Miloš Radovanović
+
+S	M. Savić
+ 	Miloš Savić
+
+S	M. Vidaković
+ 	Milan Vidaković
+
+S	Marko Savić
+ 	Marko Savić
+
+S	Miloš Savić
+ 	Miloš Savić
+
+S	Milošević
+ 	Nemanja Milošević
+
+S	N. Milošević
+ 	Nemanja Milošević
+
+S	N. Sukur
+ 	Nataša Sukur
+
+S	N. Trkulja
+ 	Nikola Trkulja
+
+S	S. Pešić
+ 	Saša Pešić
+
+S	Saša Pešić
+ 	Saša Pešić
+
+S	S. Škrbić
+ 	Srđan Škrbić
+
+S	T. Vislavski
+ 	Tijana Vislavski
+
+S	V. Kurbalija
+ 	Vladimir Kurbalija
+
+S	Z. Budimac
+ 	Zoran Budimac
+
+S	Đ. Herceg
+ 	Đorđe Herceg
+
+S	K. Ago
+ 	Kristina Ago Balog
+
+S	S. Ružičić
+ 	Sanja Ružičić
+
+S	S. Zahirović
+ 	Samir Zahirović
+
+S	Z. Mijatović
+ 	Zoran Mijatović
+
+S	S. Babić-Kekez
+ 	Snežana Babić-Kekez
+
+S	Lj. Knezevic
+ 	Ljiljana Knežević
