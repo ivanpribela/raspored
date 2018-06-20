@@ -1,0 +1,48 @@
+
+S	A1
+ 	Amf. 1
+
+S	A5
+ 	Amf. 5
+
+S	A7
+ 	Amf. 7
+
+S	S60
+ 	Sala 60
+
+S	S61
+ 	Sala 61
+
+S	S62
+ 	Sala 62
+
+S	S63
+ 	Sala 63
+
+S	S64
+ 	Sala 64
+
+S	S65
+ 	Sala 65
+
+S	RC1
+ 	RC 1
+
+S	RC2
+ 	RC 2
+
+S	RC3
+ 	RC 3
+
+S	RC59/1
+ 	RC 59/1
+
+S	RC59/3
+ 	RC 59/3
+
+S	čit
+ 	Čitaonica
+
+S	bio
+ 	Biologija
