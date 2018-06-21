@@ -45,6 +45,12 @@ public class Main {
 	public static void main(String[] arguments) throws IOException {
 
 		// Obrada argumenata
+		if (arguments.length % 2 == 1) {
+			String[] newArguments = new String[arguments.length + 1];
+			System.arraycopy(arguments, 0, newArguments, 0, arguments.length);
+			newArguments[arguments.length] = "";
+			arguments = newArguments;
+		}
 		Opcije opcije = new Opcije();
 		for (int i = 0; i < arguments.length / 2; i++) {
 			String naziv = arguments[2 * i];
