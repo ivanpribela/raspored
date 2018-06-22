@@ -45,6 +45,10 @@ public class Main {
 	public static void main(String[] arguments) throws IOException {
 
 		// Obrada argumenata
+		if (arguments.length == 1) {
+			jediniArgument(arguments[0]);
+			return;
+		}
 		if (arguments.length % 2 == 1) {
 			String[] newArguments = new String[arguments.length + 1];
 			System.arraycopy(arguments, 0, newArguments, 0, arguments.length);
@@ -92,6 +96,24 @@ public class Main {
 			}
 			System.out.println(format.apply(cas));
 			prethodni = cas;
+		}
+	}
+
+	protected static void jediniArgument(String naziv) throws IllegalArgumentException {
+		switch (naziv) {
+
+		case "-v": case "--verzija": case "--version":
+			System.out.println("Svetovid Raspored verzija 1.0");
+			break;
+
+		case "-?":
+		case "-p": case "--pomoc":
+		case "-h": case "--help":
+			// TODO Implementirati
+			break;
+
+		default:
+			throw Proveri.argument("Nepoznata samostalna opcija", naziv);
 		}
 	}
 
