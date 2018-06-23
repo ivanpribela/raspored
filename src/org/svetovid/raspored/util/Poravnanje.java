@@ -141,7 +141,7 @@ public enum Poravnanje {
 
 	public abstract String poravnaj(String original, int sirina);
 
-	public static Poravnanje pretvoriIzOznaka(String oznaka) throws IllegalArgumentException {
+	public static Poravnanje pretvoriIzOznake(String oznaka) throws IllegalArgumentException {
 		for (Poravnanje poravnanje : values()) {
 			if (poravnanje.oznaka.equals(oznaka)) {
 				return poravnanje;

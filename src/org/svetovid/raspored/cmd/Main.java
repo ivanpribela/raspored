@@ -46,7 +46,7 @@ public class Main {
 
 		// Obrada argumenata
 		if (arguments.length == 1) {
-			jediniArgument(arguments[0]);
+			jediniArgument(arguments[0]); // TODO Obrada izuzetka za lose argumente
 			return;
 		}
 		if (arguments.length % 2 == 1) {
@@ -59,7 +59,7 @@ public class Main {
 		for (int i = 0; i < arguments.length / 2; i++) {
 			String naziv = arguments[2 * i];
 			String vrednost = arguments[2 * i + 1];
-			argument(i, naziv, vrednost, opcije);
+			argument(i, naziv, vrednost, opcije); // TODO Obrada izuzetka za lose argumente
 		}
 		if (opcije.getRedosled() == null) {
 			redosled("1dvpni", opcije);
@@ -243,7 +243,7 @@ public class Main {
 			}
 
 			// Kolona sa osobinom
-			Poravnanje poravnanje = Poravnanje.pretvoriIzOznaka(matcher.group(1));
+			Poravnanje poravnanje = Poravnanje.pretvoriIzOznake(matcher.group(1));
 			String s = matcher.group(2);
 			int sirina = 0;
 			if (!"".equals(s)) {
