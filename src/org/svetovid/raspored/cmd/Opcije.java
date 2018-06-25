@@ -29,6 +29,7 @@ import java.util.stream.Collectors;
 
 import org.svetovid.raspored.model.Cas;
 import org.svetovid.raspored.util.Filter;
+import org.svetovid.raspored.util.Nivo;
 import org.svetovid.raspored.util.Odluka;
 
 public class Opcije {
@@ -50,6 +51,8 @@ public class Opcije {
 	protected Path putanja;
 	protected Odluka inicijalizacija;
 	protected Odluka preuzimanje;
+	protected Nivo nivoZaKonzolu;
+	protected Nivo nivoZaFajl;
 
 	public Path getPutanja() {
 		return putanja;
@@ -73,6 +76,22 @@ public class Opcije {
 
 	public void setPreuzimanje(Odluka preuzimanje) {
 		this.preuzimanje = preuzimanje;
+	}
+
+	public Nivo getNivoZaKonzolu() {
+		return nivoZaKonzolu;
+	}
+
+	public void setNivoZaKonzolu(Nivo nivoZaKonzolu) {
+		this.nivoZaKonzolu = nivoZaKonzolu;
+	}
+
+	public Nivo getNivoZaFajl() {
+		return nivoZaFajl;
+	}
+
+	public void setNivoZaFajl(Nivo nivoZaFajl) {
+		this.nivoZaFajl = nivoZaFajl;
 	}
 
 	// TODO Dodati cuvanje ostalih standardnih opcija

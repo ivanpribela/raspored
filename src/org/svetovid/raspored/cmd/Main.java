@@ -151,6 +151,16 @@ public class Main {
 				}
 				break;
 
+			// "info" "trag2" "sve"
+			case "--dnevnik":
+				// TODO Implementirati
+				break;
+
+			// "greske" "upozorenja" "nista"
+			case "--poruke":
+				// TODO Implementirati
+				break;
+
 			///////////
 			// Ispis //
 			///////////
