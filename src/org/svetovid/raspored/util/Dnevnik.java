@@ -44,77 +44,77 @@ import java.util.logging.StreamHandler;
  */
 public class Dnevnik {
 
-	public static void trag3(String message, Object... arguments) {
-		zapisi(Level.FINEST, message, arguments);
+	public static void trag3(String poruka, Object... argumenti) {
+		zapisi(Nivo.TRAG3, poruka, argumenti);
 	}
 
-	public static void trag3(String message, Throwable thrown, Object... arguments) {
-		zapisi(Level.FINEST, message, thrown, arguments);
+	public static void trag3(String poruka, Throwable razlog, Object... argumenti) {
+		zapisi(Nivo.TRAG3, poruka, razlog, argumenti);
 	}
 
-	public static void trag2(String message, Object... arguments) {
-		zapisi(Level.FINER, message, arguments);
+	public static void trag2(String poruka, Object... argumenti) {
+		zapisi(Nivo.TRAG2, poruka, argumenti);
 	}
 
-	public static void trag2(String message, Throwable thrown, Object... arguments) {
-		zapisi(Level.FINER, message, thrown, arguments);
+	public static void trag2(String poruka, Throwable razlog, Object... argumenti) {
+		zapisi(Nivo.TRAG2, poruka, razlog, argumenti);
 	}
 
-	public static void trag(String message, Object... arguments) {
-		zapisi(Level.FINE, message, arguments);
+	public static void trag(String poruka, Object... argumenti) {
+		zapisi(Nivo.TRAG, poruka, argumenti);
 	}
 
-	public static void trag(String message, Throwable thrown, Object... arguments) {
-		zapisi(Level.FINE, message, thrown, arguments);
+	public static void trag(String poruka, Throwable razlog, Object... argumenti) {
+		zapisi(Nivo.TRAG, poruka, razlog, argumenti);
 	}
 
-	public static void konfig(String message, Object... arguments) {
-		zapisi(Level.CONFIG, message, arguments);
+	public static void konfig(String poruka, Object... argumenti) {
+		zapisi(Nivo.KONFIGURACIJA, poruka, argumenti);
 	}
 
-	public static void konfig(String message, Throwable thrown, Object... arguments) {
-		zapisi(Level.CONFIG, message, thrown, arguments);
+	public static void konfig(String poruka, Throwable razlog, Object... argumenti) {
+		zapisi(Nivo.KONFIGURACIJA, poruka, razlog, argumenti);
 	}
 
-	public static void info(String message, Object... arguments) {
-		zapisi(Level.INFO, message, arguments);
+	public static void info(String poruka, Object... argumenti) {
+		zapisi(Nivo.INFORMACIJA, poruka, argumenti);
 	}
 
-	public static void info(String message, Throwable thrown, Object... arguments) {
-		zapisi(Level.INFO, message, thrown, arguments);
+	public static void info(String poruka, Throwable razlog, Object... argumenti) {
+		zapisi(Nivo.INFORMACIJA, poruka, razlog, argumenti);
 	}
 
-	public static void upozorenje(String message, Object... arguments) {
-		zapisi(Level.WARNING, message, arguments);
+	public static void upozorenje(String poruka, Object... argumenti) {
+		zapisi(Nivo.UPOZORENJE, poruka, argumenti);
 	}
 
-	public static void upozorenje(String message, Throwable thrown, Object... arguments) {
-		zapisi(Level.WARNING, message, thrown, arguments);
+	public static void upozorenje(String poruka, Throwable razlog, Object... argumenti) {
+		zapisi(Nivo.UPOZORENJE, poruka, razlog, argumenti);
 	}
 
-	public static void greska(String message, Object... arguments) {
-		zapisi(Level.SEVERE, message, arguments);
+	public static void greska(String poruka, Object... argumenti) {
+		zapisi(Nivo.GRESKA, poruka, argumenti);
 	}
 
-	public static void greska(String message, Throwable thrown, Object... arguments) {
-		zapisi(Level.SEVERE, message, thrown, arguments);
+	public static void greska(String poruka, Throwable razlog, Object... argumenti) {
+		zapisi(Nivo.GRESKA, poruka, razlog, argumenti);
 	}
 
-	protected static void zapisi(Level level, String message, Object... arguments) {
-		zapisi(level, message, null, arguments);
+	protected static void zapisi(Nivo level, String poruka, Object... argumenti) {
+		zapisi(level, poruka, null, argumenti);
 	}
 
-	protected static void zapisi(Level level, String message, Throwable thrown, Object... arguments) {
+	protected static void zapisi(Nivo nivo, String poruka, Throwable razlog, Object... argumenti) {
 		try {
-			message = String.format(message, arguments);
+			poruka = String.format(poruka, argumenti);
 		} catch (IllegalFormatException e) {
 			// Ne diramo poruku, neka ostane u originalu
 		}
 		Logger logger = findLogger();
-		if (thrown == null) {
-			logger.log(level, message);
+		if (razlog == null) {
+			logger.log(nivo.getNivo(), poruka);
 		} else {
-			logger.log(level, message, thrown);
+			logger.log(nivo.getNivo(), poruka, razlog);
 		}
 	}
 
