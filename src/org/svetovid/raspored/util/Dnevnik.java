@@ -136,7 +136,7 @@ public class Dnevnik {
 		return callerClassName.orElse("");
 	}
 
-	public static void podesi(Path folder) {
+	public static void podesi(Nivo nivoZaKonzolu, Nivo nivoZaFajl, Path folder) {
 
 		// Glavni dnevnik
 		Logger logger = Logger.getLogger("");
@@ -148,7 +148,7 @@ public class Dnevnik {
 
 		// Ispis na konzolu
 		DnevnikConsoleHandler consoleHandler = new DnevnikConsoleHandler();
-		consoleHandler.setLevel(Level.INFO);
+		consoleHandler.setLevel(nivoZaKonzolu.getNivo());
 		logger.addHandler(consoleHandler);
 
 		// Ispis u fajl
@@ -158,7 +158,7 @@ public class Dnevnik {
 				Files.createDirectories(folder);
 				DnevnikFileHandler fileHandler = new DnevnikFileHandler(fajl);
 				fileHandler.setFormatter(new DnevnikFormatter());
-				fileHandler.setLevel(Level.ALL);
+				fileHandler.setLevel(nivoZaFajl.getNivo());
 				logger.addHandler(fileHandler);
 			} catch (IOException e) {
 				greska("Nije moguce upisivati dnevnik u fajl \"%s\"", e, fajl);
