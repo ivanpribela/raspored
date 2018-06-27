@@ -105,6 +105,9 @@ public class Dnevnik {
 	}
 
 	protected static void zapisi(Nivo nivo, String poruka, Throwable razlog, Object... argumenti) {
+		if (poruka == null) {
+			poruka = "null";
+		}
 		try {
 			poruka = String.format(poruka, argumenti);
 		} catch (IllegalFormatException e) {
