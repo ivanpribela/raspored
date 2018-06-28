@@ -151,14 +151,22 @@ public class Main {
 				}
 				break;
 
-			// "info" "trag2" "sve"
-			case "--dnevnik":
-				// TODO Implementirati
-				break;
-
 			// "greske" "upozorenja" "nista"
 			case "--poruke":
-				// TODO Implementirati
+				try {
+					opcije.setNivoZaKonzolu(Nivo.pretvoriIzOznake(vrednost));
+				} catch (IllegalArgumentException e) {
+					throw Proveri.argument("Oznaka nivoa poruka za ispis nije dobra", vrednost, e);
+				}
+				break;
+
+			// "info" "trag2" "sve"
+			case "--dnevnik":
+				try {
+					opcije.setNivoZaFajl(Nivo.pretvoriIzOznake(vrednost));
+				} catch (IllegalArgumentException e) {
+					throw Proveri.argument("Oznaka nivoa poruka za dnevnik nije dobra", vrednost, e);
+				}
 				break;
 
 			///////////

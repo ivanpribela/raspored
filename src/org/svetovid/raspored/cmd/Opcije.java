@@ -38,6 +38,8 @@ public class Opcije {
 		putanja = Paths.get(System.getProperty("user.home")).resolve(".raspored");
 		inicijalizacija = Odluka.PO_POTREBI;
 		preuzimanje = Odluka.PO_POTREBI;
+		nivoZaKonzolu = Nivo.INFORMACIJA;
+		nivoZaFajl = Nivo.SVE;
 		redosled = null;
 		grupisanje = 0;
 		format = null;
