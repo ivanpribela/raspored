@@ -20,6 +20,7 @@ import java.nio.file.Path;
 
 import org.svetovid.raspored.model.Raspored;
 import org.svetovid.raspored.util.Dnevnik;
+import org.svetovid.raspored.util.Nivo;
 import org.svetovid.raspored.util.Odluka;
 import org.svetovid.raspored.util.Proveri;
 
@@ -29,12 +30,14 @@ public class Menadzer {
 	private ListaKalendara kalendari;
 	private Normalizatori normalizatori;
 
-	public Menadzer(Path folder, Odluka inicijalizacija, Odluka preuzimanje) {
+	public Menadzer(Path folder, Odluka inicijalizacija, Odluka preuzimanje, Nivo nivoZaKonzolu, Nivo nivoZaFajl) {
 		Proveri.argument(folder != null, "folder", folder);
 		Proveri.argument(inicijalizacija != null, "inicijalizacija", inicijalizacija);
 		Proveri.argument(preuzimanje != null, "preuzimanje", preuzimanje);
+		Proveri.argument(nivoZaKonzolu != null, "nivoZaKonzolu", nivoZaKonzolu);
+		Proveri.argument(nivoZaFajl != null, "nivoZaFajl", nivoZaFajl);
 		this.preuzimanje = preuzimanje;
-		Dnevnik.podesi(folder.resolve("Dnevnik"));
+		Dnevnik.podesi(nivoZaKonzolu, nivoZaFajl, folder.resolve("Dnevnik"));
 		kalendari = new ListaKalendara(folder.resolve("Kalendari"), inicijalizacija);
 		normalizatori = new Normalizatori(folder.resolve("Normalizatori"), inicijalizacija);
 	}
