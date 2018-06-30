@@ -112,7 +112,7 @@ public class Main {
 		case "-?":
 		case "-p": case "--pomoc":
 		case "-h": case "--help":
-			// TODO Implementirati
+			System.out.println("Za uputstvo o korišćenju pogledajte dokumentaciju");
 			break;
 
 		default:
