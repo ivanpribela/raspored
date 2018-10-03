@@ -32,6 +32,7 @@ import org.svetovid.raspored.util.Proveri;
  */
 public final class Cas {
 
+	private final GodinaISemestar semestar;
 	private final SortedSet<String> studenti;
 	private final Termin termin;
 	private final String predmet;
@@ -41,7 +42,8 @@ public final class Cas {
 	private final String id;
 	private final LocalDateTime datumIzmene;
 
-	public Cas(Set<String> studenti, Termin termin, String predmet, String nastavnik, Set<Tip> tipovi, String sala, String id, LocalDateTime datumIzmene) throws IllegalArgumentException {
+	public Cas(GodinaISemestar semestar, Set<String> studenti, Termin termin, String predmet, String nastavnik, Set<Tip> tipovi, String sala, String id, LocalDateTime datumIzmene) throws IllegalArgumentException {
+		Proveri.argument(semestar != null, "semestar", semestar);
 		Proveri.argument(studenti != null, "studenti", studenti);
 		Proveri.elemente(x -> x != null, "studenti", studenti);
 		Proveri.argument(termin != null, "termin", termin);
@@ -52,6 +54,7 @@ public final class Cas {
 		Proveri.argument(sala != null, "sala", sala);
 		Proveri.argument(id != null, "id", id);
 		Proveri.argument(datumIzmene != null, "datumIzmene", datumIzmene);
+		this.semestar = semestar;
 		this.studenti = Collections.unmodifiableSortedSet(new TreeSet<>(studenti));
 		this.termin = termin;
 		this.predmet = predmet;
@@ -60,6 +63,10 @@ public final class Cas {
 		this.sala = sala;
 		this.id = id;
 		this.datumIzmene = datumIzmene;
+	}
+
+	public GodinaISemestar getSemestar() {
+		return semestar;
 	}
 
 	public Set<String> getStudenti() {
@@ -135,6 +142,7 @@ public final class Cas {
 	}
 
 	public Cas spojiSa(Cas that) throws IllegalArgumentException {
+		Proveri.argument(this.semestar.equals(that.semestar), "cas.semestar", this.semestar + " != " + that.semestar);
 		Proveri.argument(this.predmet.equals(that.predmet), "cas.predmet", this.predmet + " != " + that.predmet);
 		Proveri.argument(this.nastavnik.equals(that.nastavnik), "cas.nastavnik", this.nastavnik + " != " + that.nastavnik);
 		Proveri.argument(this.tipovi.equals(that.tipovi), "cas.tipovi", Tip.pretvoriUOznake(this.tipovi) + " != " + Tip.pretvoriUOznake(that.tipovi));
@@ -144,6 +152,6 @@ public final class Cas {
 		Set<String> sviStudenti = new TreeSet<>();
 		sviStudenti.addAll(this.studenti);
 		sviStudenti.addAll(that.studenti);
-		return new Cas(sviStudenti, termin, predmet, nastavnik, tipovi, sala, id, poslenjiDatumIzmene);
+		return new Cas(semestar, sviStudenti, termin, predmet, nastavnik, tipovi, sala, id, poslenjiDatumIzmene);
 	}
 }
