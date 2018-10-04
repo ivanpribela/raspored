@@ -107,6 +107,6 @@ public final class Normalizatori {
 		String normalizovaniNastavnik = normalizatorNastavnika.normalizuj(nastavnik);
 		String sala = cas.getSala();
 		String normalizovanaSala = normalizatorSala.normalizuj(sala);
-		return new Cas(normalizovaniStudenti, cas.getTermin(), normalizovaniPredmet, normalizovaniNastavnik, cas.getTipovi(), normalizovanaSala, cas.getId(), cas.getDatumIzmene());
+		return new Cas(cas.getSemestar(), normalizovaniStudenti, cas.getTermin(), normalizovaniPredmet, normalizovaniNastavnik, cas.getTipovi(), normalizovanaSala, cas.getId(), cas.getDatumIzmene());
 	}
 }

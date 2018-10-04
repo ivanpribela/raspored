@@ -22,6 +22,7 @@ import java.util.Set;
 
 import org.svetovid.raspored.model.Cas;
 import org.svetovid.raspored.model.Dan;
+import org.svetovid.raspored.model.GodinaISemestar;
 import org.svetovid.raspored.model.Termin;
 import org.svetovid.raspored.model.Tip;
 import org.svetovid.raspored.model.Vreme;
@@ -36,6 +37,7 @@ import org.svetovid.raspored.util.Proveri;
  */
 public final class GraditeljCasova {
 
+	private GodinaISemestar semestar;
 	private String studenti;
 	private Dan dan;
 	private Vreme vremeOd;
@@ -46,6 +48,19 @@ public final class GraditeljCasova {
 	private String sala;
 	private String id;
 	private LocalDateTime datumIzmene;
+
+	public GodinaISemestar getSemestar() {
+		return semestar;
+	}
+
+	public GraditeljCasova semestar(String novaVrednost) throws IllegalArgumentException {
+		if (novaVrednost == null) {
+			semestar = null;
+		} else {
+			semestar = GodinaISemestar.pretvoriIzISO(novaVrednost);
+		}
+		return this;
+	}
 
 	public String getStudenti() {
 		return studenti;
@@ -168,6 +183,9 @@ public final class GraditeljCasova {
 	}
 
 	public Cas napravi() throws IllegalStateException {
+		if (semestar == null) {
+			throw new IllegalStateException("semestar");
+		}
 		if (studenti == null) {
 			throw new IllegalStateException("studenti");
 		}
@@ -199,6 +217,6 @@ public final class GraditeljCasova {
 			throw new IllegalStateException("datumIzmene");
 		}
 		Termin termin = new Termin(dan, vremeOd, vremeDo);
-		return new Cas(Set.of(studenti), termin, predmet, nastavnik, tipovi, sala, id, datumIzmene);
+		return new Cas(semestar, Set.of(studenti), termin, predmet, nastavnik, tipovi, sala, id, datumIzmene);
 	}
 }
