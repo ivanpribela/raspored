@@ -47,6 +47,7 @@ import org.svetovid.raspored.util.Proveri;
 public final class Parser {
 
 	public static final Pattern PATTERN_STUDENTI     = Pattern.compile("^ATTENDEE(;.*)*;CN=(?<studenti>.*?)(;.*)*:mailto.*$");
+	public static final Pattern PATTERN_SEMESTAR     = Pattern.compile("^DTSTART(;.*)*:(?<semestar>\\d{8})T(\\d{6})Z?$");
 	public static final Pattern PATTERN_DAN          = Pattern.compile("^RRULE(;.*)*:(.*;)*FREQ=WEEKLY(;.*)*;BYDAY=(?<dan>.*?)(;.*)*$");
 	public static final Pattern PATTERN_VREME_OD     = Pattern.compile("^DTSTART(;.*)*:(\\d{8})T(?<vremeOd>\\d{6})Z?$");
 	public static final Pattern PATTERN_VREME_DO     = Pattern.compile("^DTEND(;.*)*:(\\d{8})T(?<vremeDo>\\d{6})Z?$");
@@ -56,6 +57,7 @@ public final class Parser {
 
 	public Parser() {
 		this(Arrays.asList(
+			PATTERN_SEMESTAR,
 			PATTERN_DAN,
 			PATTERN_VREME_OD,
 			PATTERN_VREME_DO,
@@ -185,7 +187,8 @@ public final class Parser {
 	}
 
 	private Object formatirajCasZaDnevnik(GraditeljCasova fabrika) {
-		return String.format("%s %s %s %3s %5s-%5s %s, %s (%s) %s",
+		return String.format("%s %s %s %s %3s %5s-%5s %s, %s (%s) %s",
+				fabrika.getSemestar() == null ? "" : fabrika.getSemestar(),
 				fabrika.getId() == null ? "" : fabrika.getId(),
 				fabrika.getDatumIzmene() == null ? "?" : fabrika.getDatumIzmene(),
 				fabrika.getStudenti() == null ? "?" : fabrika.getStudenti(),
