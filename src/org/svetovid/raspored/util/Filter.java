@@ -30,6 +30,7 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 import org.svetovid.raspored.model.Cas;
+import org.svetovid.raspored.model.GodinaISemestar;
 import org.svetovid.raspored.model.Vreme;
 
 public abstract class Filter {
@@ -109,6 +110,20 @@ public abstract class Filter {
 				}
 			}
 			return false;
+		};
+	}
+
+	public static Predicate<Cas> semestar(GodinaISemestar izraz, Function<Cas, GodinaISemestar> funkcija) throws IllegalArgumentException {
+		Proveri.argument(funkcija != null, "funkcija", funkcija);
+		return (Cas cas) -> {
+			if (izraz == null) {
+				return true;
+			}
+			GodinaISemestar vrednost = funkcija.apply(cas);
+			if (vrednost == null) {
+				return false;
+			}
+			return vrednost.equals(izraz);
 		};
 	}
 
