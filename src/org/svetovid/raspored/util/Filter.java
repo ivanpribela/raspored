@@ -195,7 +195,7 @@ public abstract class Filter {
 			                          ">".equals(relacija) ? x -> x >  0 :
 			                         ">=".equals(relacija) ? x -> x >= 0 :
 			                          "=".equals(relacija) ? x -> x == 0 :
-			                                                 x -> x == 0;
+			                                                 x -> x != 0;
 			if ("od".equals(m.group(1))) {
 				return termin(granica, Cas::getVremeOd, poredjenje);
 			} else {
