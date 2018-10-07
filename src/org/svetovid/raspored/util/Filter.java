@@ -143,6 +143,8 @@ public abstract class Filter {
 			jedinica = ChronoUnit.WEEKS;
 		} else if (c == 'm') {
 			jedinica = ChronoUnit.MONTHS;
+		} else if (c == 'g' || c == 'y') {
+			jedinica = ChronoUnit.YEARS;
 		} else {
 			throw Proveri.argument("izraz", izraz);
 		}
