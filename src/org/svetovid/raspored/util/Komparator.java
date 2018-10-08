@@ -25,6 +25,7 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 import org.svetovid.raspored.model.Cas;
+import org.svetovid.raspored.model.GodinaISemestar;
 import org.svetovid.raspored.model.Termin;
 import org.svetovid.raspored.model.Tip;
 
@@ -58,6 +59,11 @@ public class Komparator {
 	public static Comparator<Cas> vreme(Function<Cas, Termin> funkcija) {
 		Proveri.argument(funkcija != null, "funkcija", funkcija);
 		return Comparator.comparing(funkcija, Comparator.comparing(Termin::getVremeOd).thenComparing(Termin::getVremeDo));
+	}
+
+	public static Comparator<Cas> semestar(Function<Cas, GodinaISemestar> funkcija) {
+		Proveri.argument(funkcija != null, "funkcija", funkcija);
+		return Comparator.comparing(funkcija);
 	}
 
 	public static Comparator<Cas> visestruki(Iterable<Comparator<Cas>> komparatori) {
