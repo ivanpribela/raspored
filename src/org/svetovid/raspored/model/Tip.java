@@ -29,20 +29,23 @@ import org.svetovid.raspored.util.Proveri;
  */
 public enum Tip {
 
-	PREDAVANJA("P", "Predavanja"),
-	TEORIJSKE_VEZBE("V", "Vežbe"),
-	PRAKTICNE_VEZBE("RV", "Praktične vežbe");
+	PREDAVANJA("Predavanja", "P"),
+	TEORIJSKE_VEZBE("Vežbe", "V"),
+	PRAKTICNE_VEZBE("Praktične vežbe", "RV", "PV", "R");
 
-	private final String oznaka;
 	private final String naziv;
+	private final String[] oznake;
 
-	private Tip(String oznaka, String naziv) {
-		this.oznaka = oznaka;
+	private Tip(String naziv, String... oznake) {
 		this.naziv = naziv;
+		Proveri.argument(oznake != null, "oznake", oznake);
+		Proveri.argument(oznake.length > 0, "oznake", oznake);
+		Proveri.elemente(x -> x != null, "oznake", oznake);
+		this.oznake = oznake;
 	}
 
-	public String getOznaka() {
-		return oznaka;
+	public String[] getOznake() {
+		return oznake;
 	}
 
 	public String getNaziv() {
@@ -56,9 +59,12 @@ public enum Tip {
 		for (String oznaka : oznake) {
 			boolean poznat = false;
 			for (Tip tip : Tip.values()) {
-				if (tip.getOznaka().equalsIgnoreCase(oznaka.trim())) {
-					skup.add(tip);
-					poznat = true;
+				for (String o : tip.getOznake()) {
+					if (o.equalsIgnoreCase(oznaka.trim())) {
+						skup.add(tip);
+						poznat = true;
+						break;
+					}
 				}
 			}
 			Proveri.argument(poznat, "oznaka", oznaka);
@@ -71,7 +77,7 @@ public enum Tip {
 		StringBuilder s = new StringBuilder();
 		for (Tip tip : Tip.values()) {
 			if (tipovi.contains(tip)) {
-				s.append(tip.oznaka);
+				s.append(tip.oznake[0]);
 				s.append("+");
 			}
 		}
