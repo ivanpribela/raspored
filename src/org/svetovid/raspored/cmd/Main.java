@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -31,6 +32,7 @@ import java.util.stream.Collectors;
 
 import org.svetovid.raspored.io.Menadzer;
 import org.svetovid.raspored.model.Cas;
+import org.svetovid.raspored.model.GodinaISemestar;
 import org.svetovid.raspored.model.Raspored;
 import org.svetovid.raspored.model.Tip;
 import org.svetovid.raspored.util.Filter;
@@ -61,6 +63,9 @@ public class Main {
 			String naziv = arguments[2 * i];
 			String vrednost = arguments[2 * i + 1];
 			argument(i, naziv, vrednost, opcije); // TODO Obrada izuzetka za lose argumente
+		}
+		if (!opcije.hasFilter("M")) {
+			opcije.addFilter("M", Filter.semestar(GodinaISemestar.pretvoriIzDatuma(LocalDate.now()), Cas::getSemestar));
 		}
 		if (opcije.getRedosled() == null) {
 			redosled("1dvpni", opcije);

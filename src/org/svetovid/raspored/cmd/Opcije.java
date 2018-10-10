@@ -145,6 +145,10 @@ public class Opcije {
 		lista.add(filter);
 	}
 
+	public boolean hasFilter(String kljuc) {
+		return filteri.containsKey(kljuc);
+	}
+
 	public Predicate<Cas> getFilter() {
 		return Filter.konjunkcija(
 				filteri.values().stream()
