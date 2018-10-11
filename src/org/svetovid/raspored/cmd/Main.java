@@ -195,6 +195,11 @@ public class Main {
 			// Filteri //
 			/////////////
 
+			// "2017/18L"
+			case "-m": case "--semestar":
+				opcije.addFilter("M" + pozicija, Filter.semestar(GodinaISemestar.pretvoriIzOznake(vrednost), Cas::getSemestar));
+				break;
+
 			// "=1-IT" "RN"
 			case "-s": case "--smer":
 				opcije.addFilter("S", Filter.skupStringova(vrednost, Cas::getStudenti));
@@ -255,7 +260,7 @@ public class Main {
 		Proveri.argument(!vrednost.isEmpty(), "format", vrednost);
 
 		// Kolone
-		Pattern mustra = Pattern.compile("%([*+-]?)(\\d*)([sdvpntliz%])");
+		Pattern mustra = Pattern.compile("%([*+-]?)(\\d*)([msdvpntliz%])");
 		Matcher matcher = mustra.matcher(vrednost);
 		List<Function<Cas, String>> formati = new ArrayList<>();
 		int pocetak = 0;
@@ -281,6 +286,7 @@ public class Main {
 			}
 			Function<Cas, String> kolona;
 			switch (matcher.group(3)) {
+				case "m": case "M": kolona = Format.kolona(cas -> cas.getSemestar().toString(), sirina, poravnanje); break;
 				case "s": case "S": kolona = Format.kolona(cas -> cas.getStudenti().toString(), sirina, poravnanje); break;
 				case "d": case "D": kolona = Format.kolona(cas -> cas.getDan().getOznaka(), sirina, poravnanje); break;
 				case "v": case "V": kolona = Format.kolona(cas -> cas.getVremeOd() + "-" + cas.getVremeDo(), sirina, poravnanje); break;
@@ -320,6 +326,7 @@ public class Main {
 		for (char ch : vrednost.toCharArray()) {
 			Comparator<Cas> komparator;
 			switch (ch) {
+				case 'm': case 'M': komparator = Komparator.semestar(Cas::getSemestar); break;
 				case 's': case 'S': komparator = Komparator.skupStringova(Cas::getStudenti); break;
 				case 'd': case 'D': komparator = Komparator.dan(Cas::getTermin); break;
 				case 'v': case 'V': komparator = Komparator.vreme(Cas::getTermin); break;
