@@ -1,0 +1,10 @@
+Korišćenje
+
+    raspored {Podesavanje} [Formatiranje] [Redosled] {Filter}
+        Prikazuje raspored časova
+
+    raspored ( -v | --verzija | --version )
+        Prikazuje verziju komande
+
+    raspored ( -? | -p | --pomoc | -h | --help )
+        Prikazuje ovu pomoć
