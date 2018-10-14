@@ -96,7 +96,7 @@ public class Opcije {
 		this.nivoZaFajl = nivoZaFajl;
 	}
 
-	// TODO Dodati cuvanje ostalih standardnih opcija
+	// TODO Dodati čuvanje ostalih standardnih opcija
 
 	///////////
 	// Ispis //

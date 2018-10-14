@@ -52,7 +52,7 @@ public class Main {
 
 		// Obrada argumenata
 		if (arguments.length == 1) {
-			jediniArgument(arguments[0]); // TODO Obrada izuzetka za lose argumente
+			jediniArgument(arguments[0]); // TODO Obrada izuzetka za loše argumente
 			return;
 		}
 		if (arguments.length % 2 == 1) {
@@ -65,7 +65,7 @@ public class Main {
 		for (int i = 0; i < arguments.length / 2; i++) {
 			String naziv = arguments[2 * i];
 			String vrednost = arguments[2 * i + 1];
-			argument(i, naziv, vrednost, opcije); // TODO Obrada izuzetka za lose argumente
+			argument(i, naziv, vrednost, opcije); // TODO Obrada izuzetka za loše argumente
 		}
 		if (!opcije.hasFilter("M")) {
 			opcije.addFilter("M", Filter.semestar(GodinaISemestar.pretvoriIzDatuma(LocalDate.now()), Cas::getSemestar));

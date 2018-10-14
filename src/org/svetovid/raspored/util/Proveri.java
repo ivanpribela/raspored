@@ -33,7 +33,16 @@ public class Proveri {
 		return vrednost;
 	}
 
-	public static <T> Collection<T> elemente(Function<T, Boolean> test, String poruka, Collection<T> kolekcija) throws IllegalArgumentException {
+	public static <T, V extends Iterable<T>> V elemente(Function<T, Boolean> test, String poruka, V kolekcija) throws IllegalArgumentException {
+		int indeks = 0;
+		for (T element : kolekcija) {
+			argument(test.apply(element), poruka + "[" + indeks + "]", element);
+			indeks++;
+		}
+		return kolekcija;
+	}
+
+	public static <T> T[] elemente(Function<T, Boolean> test, String poruka, T[] kolekcija) throws IllegalArgumentException {
 		int indeks = 0;
 		for (T element : kolekcija) {
 			argument(test.apply(element), poruka + "[" + indeks + "]", element);
