@@ -4,5 +4,7 @@
 2RN	https://calendar.google.com/calendar/ical/4m68kac06oau937i0kfsglv4vo%40group.calendar.google.com/public/basic.ics
 3IT	https://calendar.google.com/calendar/ical/6ovsf0fqb19q10s271b9e59ttc%40group.calendar.google.com/public/basic.ics
 3RN	https://calendar.google.com/calendar/ical/0rm1s1krr0e83m5dn7jfdjtbg8%40group.calendar.google.com/public/basic.ics
-4	https://calendar.google.com/calendar/ical/a730slcmbr9c6dii94j9pbdir4%40group.calendar.google.com/public/basic.ics
-M	https://calendar.google.com/calendar/ical/slmamsigaoclkjvvroj1t280v8%40group.calendar.google.com/public/basic.ics
+4IT	https://calendar.google.com/calendar/ical/a730slcmbr9c6dii94j9pbdir4%40group.calendar.google.com/public/basic.ics
+4RN	https://calendar.google.com/calendar/ical/slmamsigaoclkjvvroj1t280v8%40group.calendar.google.com/public/basic.ics
+5IT	https://calendar.google.com/calendar/ical/uvpgri9ofm96ogb39de7dm6mc0%40group.calendar.google.com/public/basic.ics
+5RN	https://calendar.google.com/calendar/ical/pn2it070jpd0votpmmg9bqht88%40group.calendar.google.com/public/basic.ics

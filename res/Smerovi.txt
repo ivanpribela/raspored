@@ -29,8 +29,14 @@ S	3IT
 S	3RN
  	3-RN
 
-S	4
- 	4-IT+RN
+S	4IT
+ 	4-IT
 
-S	M
- 	Master
+S	4RN
+ 	4-RN
+
+S	5IT
+ 	4-IT
+
+S	5RN
+ 	4-RN
