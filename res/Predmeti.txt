@@ -16,3 +16,6 @@ S	Baze podatak 2
 
 S	Arhitektura
  	Arhitektura, dizajn i obrasci
+
+S	Seminarski rad A -skript jezici J. Vidaković
+ 	Seminarski rad A - skript jezici

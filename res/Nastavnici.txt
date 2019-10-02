@@ -1,21 +1,51 @@
 
+R	-
+ 	 
+
 R	\.\s*
  	. 
 
-R	\s+-\s+
- 	-
+R	\s+
+ 	 
 
 R	dizajn i obrasci\\, 
  	
 
-S	A. Klašnja-Milićević
+R	programiranje 1\\, 
+ 	
+
+R	etika i društvena odgovornost\\, 
+ 	
+
+S	A. Klašnja Milićević
  	Aleksandra Klašnja-Milićević
+
+S	A. Slivkova
+ 	Ana Slivkova
+
+S	A. Tomčić
+ 	Aleksandar Tomčić
+
+S	A. Tomcic
+ 	Aleksandar Tomčić
 
 S	B. Bratić
  	Brankica Bratić
 
-S	D. Boberić-Krstićev
+S	D. Boberić Krstićev
  	Danijela Boberić-Krstićev
+
+S	D. Boberić
+ 	Danijela Boberić-Krstićev
+
+S	D. Matić
+ 	Dušica Matić
+
+S	D. Knežević
+ 	Dušica Knežević
+
+S	D. Knezević
+ 	Dušica Knežević
 
 S	D. Mašulović
  	Dragan Mašulović
@@ -26,7 +56,13 @@ S	D. Pracner
 S	D. Radaković
  	Davorka Radaković
 
+S	D. Radakovići
+ 	Davorka Radaković
+
 S	D. Tešendić
+ 	Danijela Tešendić
+
+S	D. Tesendić
  	Danijela Tešendić
 
 S	G. Rakić
@@ -35,11 +71,20 @@ S	G. Rakić
 S	I. Bošnjak
  	Ivica Bošnjak
 
+S	I. Dolinka
+ 	Igor Dolinka
+
 S	I. Pribela
  	Ivan Pribela
 
+S	I. Tojić
+ 	Ivana Tojić
+
 S	I. Štajner Papuga
- 	Ivana Štajner Papuga
+ 	Ivana Štajner-Papuga
+
+S	J. Babić
+ 	Jela Babić
 
 S	J. Vidaković
  	Jovana Vidaković
@@ -47,11 +92,26 @@ S	J. Vidaković
 S	L. Fodor
  	Lidija Fodor
 
+S	Lj. Knezevic
+ 	Ljiljana Knežević
+
+S	Lj. Knezević
+ 	Ljiljana Knežević
+
+S	Lj. Knežević
+ 	Ljiljana Knežević
+
 S	M. Ivanović
  	Mirjana Ivanović
 
+S	M. Ilić
+ 	Mihailo Ilić
+
 S	M. Jović
  	Milan Jović
+
+S	M. Jolić
+ 	Maja Jolić
 
 S	M. Pech
  	Maja Pech
@@ -65,6 +125,12 @@ S	M. Radovanović
 S	M. Savić
  	Miloš Savić
 
+S	M. Škorić
+ 	Marko Škorić
+
+S	M. Stojaković
+ 	Miloš Stojaković
+
 S	M. Vidaković
  	Milan Vidaković
 
@@ -77,14 +143,29 @@ S	Miloš Savić
 S	Milošević
  	Nemanja Milošević
 
+S	N. Dugandzija
+ 	Nevena Dugandžija
+
 S	N. Milošević
  	Nemanja Milošević
+
+S	N. Morača
+ 	Nenad Morača 
+
+S	N. Mudrinski
+ 	Nebojša Mudrinski
 
 S	N. Sukur
  	Nataša Sukur
 
+S	N. Ranković
+ 	Nevena Ranković
+
 S	N. Trkulja
  	Nikola Trkulja
+
+S	R. Madaras Silađi
+ 	Rozalija Madaras-Silađi
 
 S	S. Pešić
  	Saša Pešić
@@ -116,11 +197,14 @@ S	S. Ružičić
 S	S. Zahirović
  	Samir Zahirović
 
-S	Z. Mijatović
- 	Zoran Mijatović
+S	S. Zahirovic
+ 	Samir Zahirović
 
-S	S. Babić-Kekez
+S	S. Babić Kekez
  	Snežana Babić-Kekez
 
-S	Lj. Knezevic
- 	Ljiljana Knežević
+S	V. Uljarević
+ 	Vlado Uljarević
+
+S	Z. Mijatović
+ 	Zoran Mijatović
