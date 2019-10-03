@@ -74,7 +74,7 @@ public class Main {
 			redosled("1dvpni", opcije);
 		}
 		if (opcije.getFormat() == null) {
-			format("%+10s | %d %v | %+50p %+7t %+30n %+15l", opcije);
+			format("%-9s | %d %v | %+50p %+7t %+30n %+15l", opcije);
 		}
 
 		// Parsiranje kalendara
@@ -301,7 +301,7 @@ public class Main {
 			Function<Cas, String> kolona;
 			switch (matcher.group(3)) {
 				case "m": case "M": kolona = Format.kolona(cas -> cas.getSemestar().toString(), sirina, poravnanje); break;
-				case "s": case "S": kolona = Format.kolona(cas -> cas.getStudenti().toString(), sirina, poravnanje); break;
+				case "s": case "S": kolona = Format.kolona(cas -> cas.getStudenti().stream().collect(Collectors.joining(" ")), sirina, poravnanje); break;
 				case "d": case "D": kolona = Format.kolona(cas -> cas.getDan().getOznaka(), sirina, poravnanje); break;
 				case "v": case "V": kolona = Format.kolona(cas -> cas.getVremeOd() + "-" + cas.getVremeDo(), sirina, poravnanje); break;
 				case "p": case "P": kolona = Format.kolona(Cas::getPredmet, sirina, poravnanje); break;
