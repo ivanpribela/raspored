@@ -27,7 +27,74 @@ Redosled
 
 Filteri
 
-...
+    Iza svih opcija za filtriranje je obavezno navesti vrednost po kojoj se fil-
+    trira. Moguće je više puta navesti isti kriterijum za filtriranje i u tom
+    slučaju svi moraju biti zadovoljeni da bi čas bio prikazan. Izuzetak su sle-
+    deće opcije za filtriranje: m, v, i. Kod njih je dovoljno da bar jedan uslov
+    bude zadovoljen kako bi čas bio prikazan.
+
+    -m, --semestar
+        Tačna oznaka školske godine i semestra kao na primer: "2018/19L" ili
+        "2019/20z"
+
+    -s, --smer":
+        Tačna kombinacija godine i smera ("=1-IT"), samo godine ("2") ili samo
+        smera ("RN")
+
+    -d, --dan
+        Jedna od oznaka dana u nedelji:
+        "Pon", "Uto", "Sre", "Čet", "Pet", "Sub", "Ned"
+
+    -v, --vreme":
+        Vremenski period sledećeg oblika: PREFIKS RELACIJA VREME, kao na primer
+        "od>=12:15" ili "do<15.00"
+
+        Prefiksi su:
+          od   Upoređuje se vreme početka časa
+          do   Upoređuje se vreme kraja časa
+
+        Relacije su definisane na sledeći način:
+          <=   Vreme je pre date odrednice
+          <    Vreme je strogo pre date odrednice
+          >=   Vreme je posle date odrednice
+          >    Vreme je strogo posle date odrednice
+          =    Vreme je se tačno poklapa sa datom odrednicom
+          <>   Vreme je se ne poklapa tačno sa datom odrednicom
+
+        Vreme se zadaje kao sati i minuti, oba sa tačno dve cifre, razdvojeni
+        znakovima ".", ":" ili "-"
+
+    -p, --predmet
+        Naziv predmeta ("=Naziv predmeta") ili deo naziva ("predm")
+
+    -n, --nastavnik
+        Ime nastavnika ("=Pera Peric") ili deo imena ("Pera")
+
+    -t, --tip
+        Tačan tip časa ("=P+V") ili jedna od komponenti ako se više tipova drži
+        spojeno ("rv")
+
+    -l, --sala --lokacija
+        Naziv sale u kojoj se održava čas ("=Sala 65") ili deo naziva ("65")
+
+    -i, --id
+        Pun identifikator časa ("=1a2b3c4d5e6f@domen.com") ili deo identifi-
+        katora ("C4D5")
+
+    -z, --izmena
+        Opseg za datum i vreme poslednje izmene sledećeg oblika:
+        PERIOD KOLIČINA JEDINICE, kao na primer "<2m" ili ">3d"
+
+        Oznake za opseg su:
+          <   Datum i vreme poslednje izmene je bio pre date odrednice
+          >   Datum i vreme poslednje izmene je bio pre date odrednice
+
+        Oznake za jedinice su:
+          s h   Sat
+          d     Dan
+          n w   Nedelja
+          m     Mesec
+          g y   Godina
 
 Autorska prava
 
