@@ -23,7 +23,26 @@ Formatiranje
 
 Redosled
 
-...
+    Redosled u kojem se ispisuju podaci o časovima se zadaje pomoću obrasca koji
+    sledi odmah iza opcije za redosled:
+        -r, --redosled, --sort
+
+    Obrazac za redosled je opisan nizom slova koja predstavljaju osobine časa.
+    Slova koja odgovaraju određenim osobinama su ista kao u slučaju obrasca za
+    formatiranje. Mala slova označavaju rastući redosled, dok velika slova ozna-
+    čavaju opadajući.
+
+    Časovi se uvek sortiraju po prvoj navedenoj osobini. Ako dva časa imaju istu
+    vrednost te osobine, razmatra se sledeća navedena osobina. Ako se poklapa i
+    vrednost druge osobine, proces se nastavlja sa trećom, itd. Ako dva časa
+    imaju iste vrednosti svih osobina navedenih u obrascu, njihov mođusobni po-
+    redak u ispisu nije definisan.
+
+    Na početku obrasca može da stoji i jedna cifra koja kontroliše grupisanje
+    časova. Časovi koji imaju iste vrednosti prvih n osobina, gde je n vrednost
+    navedene cifre, biće grupisani zajedno. Časovi kojima se prvih n osobina
+    razlikuje biće odvojeni odgovarajuim brojem praznih linija u zavisnosti od
+    toga koliko prvih osobina se razlikuje.
 
 Filteri
 
