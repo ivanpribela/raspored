@@ -19,7 +19,30 @@ Podešavanja
 
 Formatiranje
 
-...
+    Format u kojem se ispisuju podaci o časovima se zadaje pomoću obrasca koji
+    sledi odmah iza opcije za formatiranje:
+        -f, --format
+
+    Obrazac za formatiranje podataka o časovima je sličan klasičnom obrascu koji
+    koristi funkcija printf standardne ulazno-izlazne biblioteke programskog je-
+    zika C. Razlika je što se umesto standardnih spesifikatora za tipove podata-
+    ka koriste sledeći spesifikatori za osobine časa:
+
+        m   Semestar
+        s   Smer
+        d   Dan
+        v   Vreme
+        p   Predmet
+        n   Nastavnik
+        t   Tip
+        l   Sala
+        i   Jedinstveni identifikator
+        z   Vreme poslednje izmene
+
+    Takođe, opcione zastavice za poravnanje kolona su:
+        +   Levo
+        -   Desno
+        *   Centar
 
 Redosled
 
