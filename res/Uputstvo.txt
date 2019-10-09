@@ -15,7 +15,42 @@ Primeri
 
 Podešavanja
 
-...
+    --folder
+        Putanja do foldera u kojem se čuvaju kalendari i podešavanja
+        Ako se ne navade biće korišćen "~/.raspored"
+
+    --inicijalizuj
+        Definiše u kojim slučajevima se vrši inicijalizacija normalizatora i
+        liste kalendara na podrazumevane vrednosti:
+          n, nikad        Nikad
+          u, uvek         Pri svakom pokretanju
+          p, po-potrebi   Samo ako već nisu inicijalizovani
+        Ako se ne navade podrazumeva se "po-potrebi"
+
+    --preuzmi
+        Definiše u kojim slučajevima se vrši preuzimanje kalednara sa interneta:
+          n, nikad        Nikad
+          u, uvek         Pri svakom pokretanju
+          p, po-potrebi   Samo ako već nisu preuzeti
+        Ako se ne navade podrazumeva se "po-potrebi"
+
+    --poruke
+        Definiše koje poruke će biti ispisivane na standardni izlaz:
+          nista       Ništa od poruka
+          greske      Samo poruke o greškama
+          upozorenja  Poruke o greškama i upozorenjima
+          info        Informacione poruke kao i sve prethodne kategorije poruka
+          konfig      Poruke o konfiguraciji i sve prethodne kategorije poruka
+          trag        Poruke za dijagnostiku i sve prethodne kategorije poruka
+          trag2       Detaljnije dijagnostičke poruke i sve prethodne kategorije
+          trag3       Najdetaljnije dijagnostičke poruke i sve ostale kategorije
+          sve         Sve poruke
+        Ako se ne navade, podrazumeva se "upozorenja"
+
+    --dnevnik
+        Definiše koje poruke će biti upisivane u dnevnik. Kategorije poruka se
+        zadaju na isti načun kao i za prethodnu opciju, a podrazumevana vrednost
+        je "sve"
 
 Formatiranje
 
