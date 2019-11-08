@@ -11,7 +11,33 @@ Korišćenje
 
 Primeri
 
-...
+    raspored
+        Celokupan raspored za sve smerove i nastavnike
+
+    raspored -n petrović -d pon
+        Raspored profesora Petrovića za ponedeljak
+
+    raspored -s =1-it
+        Raspored prve godine IT smera
+
+    raspored -p "deo naziva predmeta"
+        Svi časovi iz zadatog predmeta
+
+    raspored -t r -v "do<=10.00"
+        Sve računarske vežbe koje se završavaju do 10h
+
+    raspored -f "%d %v - %l" -t p -p "=Naziv predmeta"
+        Dan, vreme i sala u kojoj su predavanja iz zadatog predmeta
+
+    raspored -d pon -r lv
+        Raspored za ponedeljak sa časovima sortiranim prvenstveno po sali pa
+        onda po vremenu početka
+
+    raspored -z "<1m"
+        Spisak časova čiji podaci su menjani u proteklih mesec dana
+
+    raspored -f "%-9s | %d %v | %+50p %+7t %+30n %+15l" -r 1dvpni
+        Uobičajena podašavanja ekvivalentna pokretanju baz parametara
 
 Podešavanja
 
