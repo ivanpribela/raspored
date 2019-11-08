@@ -191,4 +191,8 @@ Autorska prava
 
 Detaljnije o projektu
 
-...
+    Detaljnije informacije o projektu se nalaze na stranici projekta:
+        https://github.com/ivanpribela/raspored
+
+    Na istoj lokacij su dostupni dokumentacija i izvorni kod projekta, kao i
+    podaci o otvorenim problemima, sugestijama i pitanjima.
