@@ -188,7 +188,7 @@ Filteri
         Opseg za datum i vreme poslednje izmene sledećeg oblika:
         PERIOD KOLIČINA JEDINICE, kao na primer "<2m" ili ">3d"
 
-        Oznake za opseg su:
+        Oznake za period su:
           <   Datum i vreme poslednje izmene je bio pre date odrednice
           >   Datum i vreme poslednje izmene je bio pre date odrednice
 
