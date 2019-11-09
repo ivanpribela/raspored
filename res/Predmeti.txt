@@ -2,11 +2,17 @@
 S	Objektno - orijentisano programiranje 2
  	Objektno-orijentisano programiranje 2
 
+S	Objektno - orijentisano
+ 	Objektno-orijentisano programiranje 1
+
 S	Upravljanje softverskim projektima M. Ivanović
  	Upravljanje softverskim projektima
 
 S	Upravljanje softverskim projektom
  	Upravljanje softverskim projektima
+
+S	Razvoj  mobilnih aplikacija
+ 	Razvoj mobilnih aplikacija
 
 R	Baze podataka 2.*
  	Baze podataka 2
@@ -16,6 +22,9 @@ S	Baze podatak 2
 
 S	Arhitektura
  	Arhitektura, dizajn i obrasci
+
+S	Privatnost
+ 	Privatnost etika i društvena odgovornost
 
 S	Seminarski rad A -skript jezici J. Vidaković
  	Seminarski rad A - skript jezici
