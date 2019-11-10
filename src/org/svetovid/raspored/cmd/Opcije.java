@@ -39,7 +39,7 @@ public class Opcije {
 		inicijalizacija = Odluka.PO_POTREBI;
 		preuzimanje = Odluka.PO_POTREBI;
 		nivoZaKonzolu = Nivo.UPOZORENJE;
-		nivoZaFajl = Nivo.SVE;
+		nivoZaFajl = Nivo.KONFIGURACIJA;
 		redosled = null;
 		grupisanje = 0;
 		format = null;

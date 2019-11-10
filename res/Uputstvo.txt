@@ -76,7 +76,7 @@ Podešavanja
     --dnevnik
         Definiše koje poruke će biti upisivane u dnevnik. Kategorije poruka se
         zadaju na isti načun kao i za prethodnu opciju, a podrazumevana vrednost
-        je "sve"
+        je "konfig"
 
 Formatiranje
 
